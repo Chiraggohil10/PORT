@@ -139,7 +139,7 @@ const SkillsSection = () => {
               whileInView="show"
               viewport={{ once: true }}
             >
-              {skills.frontend.map((skill, index) => (
+              {skills.frontend.map((skill) => (
                 <motion.div key={skill.name} className="group" variants={item}>
                   <div className="flex justify-between mb-2">
                     <span className="text-slate-300 font-medium group-hover:text-amber-400 transition-colors">

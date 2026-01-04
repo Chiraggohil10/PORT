@@ -22,15 +22,6 @@ const AboutSection = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
-  const cardHover = {
-    hover: {
-      y: -10,
-      scale: 1.03,
-      boxShadow: "0 25px 50px -12px rgba(251, 191, 36, 0.25)",
-      transition: { duration: 0.3 }
-    }
-  };
-
   return (
     <section 
       id="about" 

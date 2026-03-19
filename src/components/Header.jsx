@@ -3,21 +3,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaDownload } from 'react-icons/fa';
 import Logo from '../assets/logo.png';
 
-const Header = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef(null);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
+    { name: 'Skills', href: '#techstack' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
   ];
 
-  const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-  const closeMobileMenu = () => setMobileMenuOpen(false);
+  // Smooth scroll function
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
+    if (href === '#home' || href === '#') {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        const offsetTop = element.offsetTop - 80; // Account for fixed header
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+    closeMobileMenu();
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -73,19 +92,19 @@ const Header = () => {
   return (
    <>
   <header
-    className={`fixed w-full z-50 py-4 px-4 md:px-8 transition-all duration-300 ${
+    className={`fixed w-full z-50 py-3 sm:py-4 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
       scrolled
-        ? 'bg-slate-900/90 backdrop-blur-md shadow-xl border-b border-slate-800'
+        ? 'bg-white/90 backdrop-blur-md shadow-lg border-b border-slate-200'
         : 'bg-transparent'
     }`}
   >
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       {/* Logo */}
-      <a href="#home" onClick={closeMobileMenu}>
+      <a href="#home" onClick={(e) => scrollToSection(e, '#home')}>
         <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }}>
-          <img src={Logo} alt="Logo" className="w-12 md:w-14" />
-          <span className="text-white font-bold text-xl hidden sm:block">
-            Chirag <span className="text-amber-400">Gohil</span>
+          <img src={Logo} alt="Logo" className="w-10 sm:w-12 md:w-14" />
+          <span className="text-slate-800 font-bold text-lg sm:text-xl hidden sm:block">
+            Chirag <span className="text-blue-600">Gohil</span>
           </span>
         </motion.div>
       </a>
@@ -97,12 +116,13 @@ const Header = () => {
             <li key={link.name}>
               <motion.a
                 href={link.href}
-                className="text-slate-300 hover:text-amber-400 transition-colors font-medium relative group"
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="text-sm lg:text-base text-slate-600 hover:text-blue-600 transition-colors font-medium relative group"
                 whileHover={{ y: -2 }}
               >
                 {link.name}
                 <motion.span
-                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full"
+                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full"
                   initial={{ width: 0 }}
                 />
               </motion.a>
@@ -112,18 +132,25 @@ const Header = () => {
         <motion.a
           href="/ChiragGohilResume.pdf"
           download="ChiragGohilResume.pdf"
-          className="ml-8 flex  items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all"
+          className="ml-8 relative group"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <FaDownload className="text-sm" />
-          <span>Resume</span>
+          {/* Simple pill button with subtle effect */}
+          <div className="flex items-center gap-2 px-5 lg:px-6 py-2.5 lg:py-3 bg-slate-900 text-white rounded-[14px] w-full text-sm lg:text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+            {/* Animated underline */}
+            <span className="relative overflow-hidden">
+              Download CV
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
+            </span>
+            
+            {/* Simple download icon */}
+            <FaDownload className="text-sm group-hover:translate-y-0.5 transition-transform duration-300" />
+          </div>
         </motion.a>
       </nav>
-
-      {/* Mobile menu toggle */}
       <motion.button
-        className="md:hidden text-slate-300 text-2xl z-50 p-2 rounded-lg bg-slate-800/50 backdrop-blur-sm"
+        className="md:hidden text-slate-600 text-xl z-50 p-2 rounded-lg bg-white/90 backdrop-blur-sm shadow-md"
         onClick={toggleMobileMenu}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -134,8 +161,6 @@ const Header = () => {
       </motion.button>
     </div>
   </header>
-
-  {/* 🧱 Move this OUTSIDE header */}
   <AnimatePresence>
     {isMobileMenuOpen && (
       <>
@@ -152,23 +177,23 @@ const Header = () => {
         {/* Full drawer */}
         <motion.div
           ref={mobileMenuRef}
-          className="fixed top-0 right-0 h-full w-full z-50 bg-slate-900 flex flex-col shadow-2xl overflow-y-auto"
+          className="fixed top-0 right-0 h-full w-full sm:max-w-sm z-50 bg-white flex flex-col shadow-2xl overflow-y-auto"
           initial={{ x: '100%' }}
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         >
-          <div className="p-6 border-b border-slate-800">
+          <div className="p-6 border-b border-slate-200">
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-3">
                 <img src={Logo} alt="Logo" className="w-10" />
-                <span className="text-white font-bold text-lg">
-                  Chirag <span className="text-amber-400">Gohil</span>
+                <span className="text-slate-800 font-bold text-lg">
+                  Chirag <span className="text-blue-600">Gohil</span>
                 </span>
               </div>
               <button
                 onClick={closeMobileMenu}
-                className="text-slate-300 text-2xl p-2 rounded-lg hover:bg-slate-800"
+                className="text-slate-600 text-2xl p-2 rounded-lg hover:bg-slate-100"
                 aria-label="Close menu"
               >
                 <FaTimes />
@@ -185,8 +210,8 @@ const Header = () => {
                 >
                   <a
                     href={link.href}
-                    className="block text-xl text-slate-300 hover:text-amber-400 transition-colors font-medium py-2"
-                    onClick={closeMobileMenu}
+                    onClick={(e) => scrollToSection(e, link.href)}
+                    className="block text-lg sm:text-xl text-slate-700 hover:text-blue-600 transition-colors font-medium py-2"
                   >
                     {link.name}
                   </a>
@@ -199,7 +224,7 @@ const Header = () => {
             <motion.a
               href="/ChiragGohilResume.pdf"
               download="ChiragGohilResume.pdf"
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium py-3 px-6 rounded-lg transition-all w-full"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all w-full"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               onClick={closeMobileMenu}

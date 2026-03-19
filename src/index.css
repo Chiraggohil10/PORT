@@ -1,5 +1,119 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+section {
+  scroll-margin-top: 96px;
+}
+
+.section-wrap {
+  max-width: 80rem;
+  margin-inline: auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.section-grid-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, #80808012 1px, transparent 1px),
+    linear-gradient(to bottom, #80808012 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.section-solid-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #f8fafc;
+}
+
+/* Fluid type utilities used across sections */
+.text-fluid-display {
+  font-size: clamp(1.75rem, 5.2vw, 3.9rem);
+  line-height: 1.12;
+}
+
+.text-fluid-h1 {
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  line-height: 1.12;
+}
+
+.text-fluid-h2 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+.text-fluid-h3 {
+  font-size: clamp(1.125rem, 2.8vw, 2rem);
+  line-height: 1.2;
+}
+
+.text-fluid-body {
+  font-size: clamp(0.95rem, 1.8vw, 1.125rem);
+  line-height: 1.7;
+}
+
+/* Custom Animations */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+  100% { transform: translateX(100%); }
+}
+
+@keyframes gradient-xy {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+
+.animate-shine {
+  animation: shine 0.8s ease-in-out;
+}
+
+.animate-gradient-xy {
+  animation: gradient-xy 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes shine {
+  100% { transform: translateX(100%); }
+}
+
+.animate-shine {
+  animation: shine 2s ease-in-out infinite;
+}
+
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -26,4 +140,3 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
-

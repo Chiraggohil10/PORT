@@ -53,9 +53,9 @@ const HomeSection = () => {
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-10 left-10 md:top-20 md:left-1/4 w-48 h-48 md:w-72 md:h-72 bg-indigo-700 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-20 right-5 md:top-40 md:right-20 w-40 h-40 md:w-64 md:h-64 bg-amber-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-10 left-5 md:bottom-20 md:left-20 w-52 h-52 md:w-80 md:h-80 bg-emerald-600 rounded-full mix-blend-soft-light filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-10 left-10 md:top-20 md:left-1/4 w-48 h-48 md:w-72 md:h-72 bg-blue-300 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob"></div>
+        <div className="absolute top-20 right-5 md:top-40 md:right-20 w-40 h-40 md:w-64 md:h-64 bg-indigo-400 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-10 left-5 md:bottom-20 md:left-20 w-52 h-52 md:w-80 md:h-80 bg-cyan-300 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="max-w-7xl mx-auto w-full relative z-10">
@@ -68,7 +68,7 @@ const HomeSection = () => {
           >
             <motion.div variants={item}>
               <motion.span 
-                className="inline-block text-sm md:text-base font-mono text-amber-400 mb-3 px-3 py-1 rounded-full bg-slate-800 border border-amber-400/20"
+                className="inline-block text-sm md:text-base font-mono text-blue-600 mb-3 px-3 py-1 rounded-full bg-blue-100 border border-blue-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Hello, I'm
@@ -76,27 +76,27 @@ const HomeSection = () => {
             </motion.div>
             
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-3 leading-tight"
               variants={item}
             >
-              Chirag <span className="text-amber-400">Gohil</span>
+              Chirag <span className="text-blue-600">Gohil</span>
             </motion.h1>
             
             <motion.h2 
-              className="text-xl md:text-2xl text-slate-300 mb-4 md:mb-6"
+              className="text-xl md:text-2xl text-slate-600 mb-4 md:mb-6"
               variants={item}
             >
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Frontend Developer
+              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                Full Stack Developer
               </span>
             </motion.h2>
             
             <motion.p 
-              className="text-base md:text-lg text-slate-400 mb-8 md:mb-10 max-w-2xl"
+              className="text-base md:text-lg text-slate-600 mb-8 md:mb-10 max-w-2xl"
               variants={item}
             >
               I craft responsive web applications with modern technologies. 
-              Specializing in <span className="text-amber-400">React.js</span> and <span className="text-emerald-400">JavaScript</span>, 
+              Specializing in <span className="text-blue-600 font-semibold">React.js</span> and <span className="text-cyan-600 font-semibold">JavaScript</span>, 
               I build engaging user experiences that bring ideas to life.
             </motion.p>
             
@@ -105,7 +105,7 @@ const HomeSection = () => {
               variants={item}
             >
               <motion.button 
-                className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold py-2.5 px-5 md:py-3 md:px-6 rounded-lg transition-all group"
+                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-5 md:py-3 md:px-6 rounded-lg transition-all group shadow-lg hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -116,12 +116,12 @@ const HomeSection = () => {
               <motion.a 
                 href="/ChiragGohilResume.pdf" 
                 download="ChiragGohilResume.pdf"
-                className="flex items-center gap-2 text-white font-semibold py-2.5 px-5 md:py-3 md:px-6 rounded-lg border-2 border-slate-600 hover:border-amber-500 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm transition-all group"
+                className="flex items-center gap-2 text-slate-700 font-semibold py-2.5 px-5 md:py-3 md:px-6 rounded-lg border-2 border-slate-300 hover:border-blue-500 bg-white/70 hover:bg-white backdrop-blur-sm transition-all group shadow-md hover:shadow-lg"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Download CV 
-                <FaDownload className="text-amber-400 transition-transform group-hover:translate-y-0.5" />
+                <FaDownload className="text-blue-600 transition-transform group-hover:translate-y-0.5" />
               </motion.a>
             </motion.div>
             
@@ -135,9 +135,9 @@ const HomeSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="relative">
-              <div className="relative rounded-full overflow-hidden border-4 border-slate-700 w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80">
+              <div className="relative rounded-full overflow-hidden border-4 border-slate-200 w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 shadow-2xl">
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-emerald-400/10 rounded-full"
+                  className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-full"
                   animate={{ 
                     rotate: [0, 360],
                   }}
@@ -158,7 +158,7 @@ const HomeSection = () => {
               </div>
               
               <motion.div 
-                className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 bg-gradient-to-r from-amber-500 to-emerald-500 text-xs md:text-sm font-bold text-slate-900 px-3 py-1.5 md:px-4 md:py-2 rounded-full"
+                className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-xs md:text-sm font-bold text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.5 }}
@@ -169,7 +169,7 @@ const HomeSection = () => {
               
               {/* Decorative elements */}
               <motion.div 
-                className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-amber-400/10 border border-amber-400/30"
+                className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-blue-400/20 border border-blue-400/40"
                 animate={{
                   scale: [1, 1.1, 1],
                   opacity: [0.3, 0.5, 0.3]
@@ -180,7 +180,7 @@ const HomeSection = () => {
                 }}
               />
               <motion.div 
-                className="absolute -bottom-6 left-8 w-12 h-12 rounded-full bg-emerald-400/10 border border-emerald-400/30"
+                className="absolute -bottom-6 left-8 w-12 h-12 rounded-full bg-cyan-400/20 border border-cyan-400/40"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.2, 0.4, 0.2]
@@ -205,7 +205,7 @@ const HomeSection = () => {
           {["HTML5", "CSS3", "JavaScript", "React JS", "Tailwind CSS", "Redux","SCSS"].map((skill, i) => (
             <motion.div
               key={skill}
-              className="px-4 py-2 bg-slate-800/50 backdrop-blur-sm rounded-full text-slate-300 text-sm border border-slate-700"
+              className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-slate-700 text-sm border border-slate-200 shadow-md"
               animate={{
                 y: [0, -30, 0]
               }}
@@ -217,9 +217,9 @@ const HomeSection = () => {
               }}
               whileHover={{
                 scale: 1.1,
-                backgroundColor: "rgba(45, 212, 191, 0.1)",
-                borderColor: "rgba(45, 212, 191, 0.3)",
-                color: "#5eead4"
+                backgroundColor: "rgba(59, 130, 246, 0.1)",
+                borderColor: "rgba(59, 130, 246, 0.3)",
+                color: "#2563eb"
               }}
             >
               {skill}
@@ -242,8 +242,8 @@ const HomeSection = () => {
             repeat: Infinity
           }}
         >
-          <div className="w-1 h-8 bg-gradient-to-b from-amber-400 to-transparent rounded-full"></div>
-          <span className="mt-2 text-sm text-slate-400">Scroll down</span>
+          <div className="w-1 h-8 bg-gradient-to-b from-blue-600 to-transparent rounded-full"></div>
+          <span className="mt-2 text-sm text-slate-600">Scroll down</span>
         </motion.div>
       )}
     </section>

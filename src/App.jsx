@@ -1,10 +1,12 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import HomeSection from './components/HomeSection';
+import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
-import SkillsSection from './components/SkillsSection';
+import TechStackSection from './components/TechStackSection';
 import ProjectsSection from './components/ProjectsSection';
+import ExperienceSection from './components/ExperienceSection';
+import ServicesSection from './components/ServicesSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 
@@ -35,7 +37,7 @@ function App() {
   
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="min-h-screen bg-slate-50">
       <Header
         isMobileMenuOpen={isMobileMenuOpen} 
         toggleMobileMenu={toggleMobileMenu}
@@ -43,10 +45,12 @@ function App() {
       />
       
       <main>
-        <HomeSection />
+        <HeroSection />
         <AboutSection />
-        <SkillsSection />
+        <TechStackSection />
         <ProjectsSection />
+        <ExperienceSection />
+        <ServicesSection />
         <ContactSection />
       </main>
       

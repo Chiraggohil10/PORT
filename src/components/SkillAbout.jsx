@@ -53,7 +53,7 @@ const SkillAbout = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-16 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-indigo-100 py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -61,8 +61,8 @@ const SkillAbout = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">Skills & Expertise</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-slate-800 mb-4">Skills & Expertise</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
             A showcase of my technical abilities and areas of specialization in web development
           </p>
         </motion.div>
@@ -75,35 +75,35 @@ const SkillAbout = () => {
         >
           {/* Frontend Card */}
           <motion.div 
-            className="bg-gradient-to-br from-slate-800 to-slate-900 backdrop-blur-sm p-8 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden"
+            className="bg-gradient-to-br from-white to-blue-50 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 shadow-xl relative overflow-hidden"
             whileHover="hover"
             variants={cardHover}
           >
-            <div className="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-400/10 rounded-full"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-400/10 rounded-full"></div>
             
             <div className="flex items-start gap-6 relative z-10">
               <motion.div 
-                className="bg-amber-500/20 p-4 rounded-2xl shadow-lg"
+                className="bg-blue-500/20 p-4 rounded-2xl shadow-lg"
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <FaCode className="text-3xl text-amber-400" />
+                <FaCode className="text-3xl text-blue-600" />
               </motion.div>
               <div>
-                <h4 className="text-2xl font-bold text-white mb-3">Frontend Expertise</h4>
-                <p className="text-slate-400 mb-6">Creating responsive, modern and user-friendly interfaces</p>
+                <h4 className="text-2xl font-bold text-slate-800 mb-3">Frontend Expertise</h4>
+                <p className="text-slate-600 mb-6">Creating responsive, modern and user-friendly interfaces</p>
                 
                 <div className="grid grid-cols-2 gap-4">
                   {frontendSkills.map((skill, index) => (
                     <motion.div 
                       key={index}
-                      className="flex items-center gap-3 bg-slate-800/50 p-3 rounded-lg"
+                      className="flex items-center gap-3 bg-white/80 p-3 rounded-lg border border-slate-200 shadow-sm"
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="text-xl">{skill.icon}</div>
-                      <span className="text-slate-300">{skill.name}</span>
+                      <span className="text-slate-700">{skill.name}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -113,39 +113,39 @@ const SkillAbout = () => {
           
           {/* Backend Card */}
           <motion.div 
-            className="bg-gradient-to-br from-slate-800 to-slate-900 backdrop-blur-sm p-8 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden"
+            className="bg-gradient-to-br from-white to-cyan-50 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 shadow-xl relative overflow-hidden"
             whileHover="hover"
             variants={cardHover}
           >
-            <div className="absolute top-0 left-0 w-full h-1 bg-emerald-400"></div>
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-400/10 rounded-full"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500"></div>
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-400/10 rounded-full"></div>
             
             <div className="flex items-start gap-6 relative z-10">
               <motion.div 
-                className="bg-emerald-500/20 p-4 rounded-2xl shadow-lg"
+                className="bg-cyan-500/20 p-4 rounded-2xl shadow-lg"
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <FaLayerGroup className="text-3xl text-emerald-400" />
+                <FaLayerGroup className="text-3xl text-cyan-600" />
               </motion.div>
               <div>
-                <h4 className="text-2xl font-bold text-white mb-3">Backend Skills</h4>
-                <p className="text-slate-400 mb-6">Building robust server-side applications and APIs</p>
+                <h4 className="text-2xl font-bold text-slate-800 mb-3">Backend Skills</h4>
+                <p className="text-slate-600 mb-6">Building robust server-side applications and APIs</p>
                 
                 <div className="grid grid-cols-2 gap-4">
                   {backendSkills.map((skill, index) => (
                     <motion.div 
                       key={index}
-                      className="flex items-center justify-between bg-slate-800/50 p-3 rounded-lg"
+                      className="flex items-center justify-between bg-white/80 p-3 rounded-lg border border-slate-200 shadow-sm"
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center gap-3">
                         <div className="text-xl">{skill.icon}</div>
-                        <span className="text-slate-300">{skill.name}</span>
+                        <span className="text-slate-700">{skill.name}</span>
                       </div>
                       {skill.level && (
-                        <span className="text-xs px-2 py-1 bg-slate-700/50 text-slate-400 rounded-full">
+                        <span className="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-full">
                           {skill.level}
                         </span>
                       )}
@@ -155,15 +155,6 @@ const SkillAbout = () => {
               </div>
             </div>
           </motion.div>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center text-slate-500 mt-12"
-        >
-          <p>Hover over cards to see animations • Made with React & Tailwind CSS</p>
         </motion.div>
       </div>
     </div>

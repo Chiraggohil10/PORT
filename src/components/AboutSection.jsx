@@ -1,192 +1,157 @@
 // src/components/AboutSection.js
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaCode, FaLayerGroup, FaRocket, FaDownload, FaArrowRight } from 'react-icons/fa';
+import { FaCode, FaRocket, FaDownload, FaArrowRight, FaUser } from 'react-icons/fa';
 import image from '../assets/img2.avif';
-import SkillAbout from './SkillAbout';
 
 const AboutSection = () => {
-  // Animation variants
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
-
-  const cardHover = {
-    hover: {
-      y: -10,
-      scale: 1.03,
-      boxShadow: "0 25px 50px -12px rgba(251, 191, 36, 0.25)",
-      transition: { duration: 0.3 }
-    }
-  };
+  const skills = [
+    { name: 'React/Next.js', level: 90 },
+    { name: 'Node.js/Express', level: 85 },
+    { name: 'JavaScript/TypeScript', level: 92 },
+    { name: 'MongoDB/SQL', level: 80 },
+  ];
 
   return (
-    <section 
-      id="about" 
-      className="relative py-16 px-4 md:px-8  overflow-hidden"
-    >
-      {/* Background elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-700 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-blob"></div>
-        <div className="absolute bottom-20 right-1/3 w-72 h-72 bg-emerald-600 rounded-full mix-blend-soft-light filter blur-3xl opacity-15 animate-blob animation-delay-4000"></div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div 
-          className="text-center mb-10"
+    <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="section-solid-bg" />
+      <div className="section-grid-pattern" />
+      <div className="section-wrap">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <motion.span 
-            className="inline-block text-sm font-mono text-amber-400 mb-3 px-3 py-1 rounded-full bg-slate-800 border border-amber-400/20"
-            whileHover={{ scale: 1.05 }}
-          >
+          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
             ABOUT ME
-          </motion.span>
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            Know Me <span className="text-amber-400">Better</span>
-          </motion.h2>
+          </span>
+          <h2 className="text-fluid-h2 font-bold text-slate-900 mb-4">
+            Passionate About Creating{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Digital Excellence
+            </span>
+          </h2>
         </motion.div>
-        
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <motion.div 
+
+        <div className="flex flex-col lg:flex-row items-center gap-10 sm:gap-12 lg:gap-16">
+          {/* Image */}
+          <motion.div
             className="lg:w-1/2"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden border-4 border-slate-700">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-emerald-400/10"></div>
-                <motion.img 
+              <div className="relative rounded-2xl overflow-hidden border-4 border-white shadow-2xl">
+                <motion.img
                   src={image}
-                  alt="About" 
-                  className="w-full h-auto object-cover z-10"
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.4 }
-                  }}
+                  alt="Chirag Gohil"
+                  className="w-full h-auto object-cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
                 />
               </div>
               
-              <motion.div 
-                className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-amber-500 to-emerald-500 text-sm font-bold text-slate-900 px-3 py-3 rounded-full flex items-center gap-2"
-                initial={{ opacity: 0, y: 30 }}
+              {/* Floating badge */}
+              <motion.div
+                className="absolute -bottom-5 sm:-bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-2.5 rounded-full shadow-lg flex items-center gap-2 whitespace-nowrap"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
+                transition={{ delay: 0.4 }}
               >
-                <FaRocket className="text-lg" />
-                <span>Full-Stack Developer</span>
+                <FaRocket />
+                <span className="text-xs sm:text-sm font-bold">Full Stack Developer</span>
               </motion.div>
             </div>
           </motion.div>
-          
-          <motion.div 
+
+          {/* Content */}
+          <motion.div
             className="lg:w-1/2"
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <motion.h3 
-              className="text-3xl font-bold text-white mb-8"
-              variants={item}
-            >
-              Who <span className="text-amber-400">Am I?</span>
-            </motion.h3>
+            <h3 className="text-fluid-h3 font-bold text-slate-900 mb-6">
+              Building Solutions with{' '}
+              <span className="text-blue-600">Modern Technology</span>
+            </h3>
             
-            <motion.div 
-              className="mb-8"
-              variants={item}
-            >
-              <p className="text-lg text-slate-300 mb-6 leading-relaxed">
-                I'm a passionate <span className="text-amber-400 font-medium">Full-Stack Developer</span> with expertise in creating modern web applications. My journey began with frontend development using React and JavaScript, and has expanded to include backend technologies like Node.js and databases.
-              </p>
-              <p className="text-lg text-slate-300 leading-relaxed">
-                I specialize in building <span className="text-emerald-400 font-medium">responsive, user-centric applications</span> that deliver exceptional experiences. With a constant drive to learn and adapt, I stay at the forefront of web development trends and technologies.
-              </p>
-            </motion.div>
+            <p className="text-fluid-body text-slate-600 mb-6">
+              I'm a dedicated Full Stack Developer with a passion for creating elegant, efficient, and user-friendly web applications. My journey in tech started with curiosity and has evolved into a career focused on delivering high-quality digital solutions.
+            </p>
             
+            <p className="text-fluid-body text-slate-600 mb-8">
+              I specialize in building responsive applications using modern frameworks and best practices. From concept to deployment, I bring ideas to life with clean code and thoughtful design.
+            </p>
+
+            {/* Skills Progress */}
+            <div className="space-y-4 mb-8">
+              {skills.map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="flex justify-between mb-2">
+                    <span className="text-slate-700 font-medium">{skill.name}</span>
+                    <span className="text-blue-600 font-bold">{skill.level}%</span>
+                  </div>
+                  <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${skill.level}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
             
-            
-            <motion.div 
-              className="flex flex-wrap gap-4"
-              variants={item}
-            >
-              <motion.button 
-                className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold py-3 px-6 rounded-lg transition-all group"
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-3 sm:gap-4">
+              <motion.button
+                onClick={() => {
+                  const element = document.querySelector('#contact');
+                  if (element) {
+                    window.scrollTo({
+                      top: element.offsetTop - 80,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Contact Me 
-                <FaArrowRight className="transition-transform group-hover:translate-x-1" />
+                Contact Me
+                <FaArrowRight />
               </motion.button>
               
-              <motion.a 
-                href="/ChiragGohilResume.pdf" 
+              <motion.a
+                href="/ChiragGohilResume.pdf"
                 download="ChiragGohilResume.pdf"
-                className="flex items-center gap-2 text-white font-semibold py-3 px-6 rounded-lg border-2 border-slate-600 hover:border-amber-500 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm transition-all group"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-white text-sm sm:text-base text-blue-600 font-semibold rounded-lg border-2 border-blue-200 shadow-md hover:shadow-lg transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Download CV 
-                <FaDownload className="text-amber-400 transition-transform group-hover:translate-y-0.5" />
+                Download CV
+                <FaDownload />
               </motion.a>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
-
-        <SkillAbout />
       </div>
-      
-      {/* Floating elements */}
-      <motion.div 
-        className="absolute top-1/3 left-10 w-6 h-6 rounded-full bg-amber-400"
-        animate={{
-          y: [0, -20, 0],
-          opacity: [0.3, 0.7, 0.3]
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div 
-        className="absolute bottom-1/4 right-20 w-4 h-4 rounded-full bg-emerald-400"
-        animate={{
-          y: [0, -15, 0],
-          opacity: [0.2, 0.5, 0.2]
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-      />
     </section>
   );
 };

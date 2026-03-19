@@ -54,13 +54,13 @@ const Footer = () => {
 
       <div className="section-wrap">
         <motion.div
-          className="relative rounded-3xl border border-slate-200 bg-white/90 backdrop-blur-sm p-5 sm:p-6 lg:p-8 shadow-sm"
+          className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/90 backdrop-blur-sm p-5 sm:p-6 lg:p-8 shadow-sm"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="absolute inset-x-0 top-0 h-1.5 rounded-t-3xl bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500" />
+          <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             <div className="lg:col-span-5">

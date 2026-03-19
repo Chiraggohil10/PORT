@@ -1,6 +1,6 @@
 // src/components/ContactSection.js
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   FaEnvelope,
   FaMapMarkerAlt,
@@ -80,6 +80,11 @@ const ContactSection = () => {
       label: "Instagram",
     },
   ];
+
+  const submitButtonColorClass =
+    submitSuccess && !isSubmitting
+      ? "bg-gradient-to-r from-emerald-500 to-green-600"
+      : "bg-gradient-to-r from-blue-600 to-indigo-600";
 
   return (
     <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -251,26 +256,54 @@ const ContactSection = () => {
                       />
                     </div>
 
-                    {submitSuccess && (
-                      <motion.p
-                        className="text-sm text-emerald-600 font-medium"
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                      >
-                        Message sent successfully.
-                      </motion.p>
-                    )}
                   </div>
 
                   <motion.button
                     type="submit"
-                    className="w-full mt-5 sm:mt-6 inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`w-full mt-5 sm:mt-6 inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed ${submitButtonColorClass}`}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                    <FaPaperPlane className="text-sm" />
+                    <AnimatePresence mode="wait" initial={false}>
+                      {isSubmitting ? (
+                        <motion.span
+                          key="sending"
+                          className="inline-flex items-center gap-2"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Sending...
+                          <FaPaperPlane className="text-sm" />
+                        </motion.span>
+                      ) : submitSuccess ? (
+                        <motion.span
+                          key="success"
+                          className="inline-flex items-center gap-2"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Message sent successfully.
+                          <FaCheckCircle className="text-sm" />
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="default"
+                          className="inline-flex items-center gap-2"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Send Message
+                          <FaPaperPlane className="text-sm" />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </motion.button>
                 </form>
               </div>

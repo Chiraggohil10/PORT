@@ -83,10 +83,6 @@ section {
   100% { background-position: 0% 50%; }
 }
 
-@keyframes shine {
-  100% { transform: translateX(100%); }
-}
-
 @keyframes gradient-xy {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -95,10 +91,6 @@ section {
 
 .animate-gradient {
   animation: gradient 3s ease infinite;
-}
-
-.animate-shine {
-  animation: shine 0.8s ease-in-out;
 }
 
 .animate-gradient-xy {

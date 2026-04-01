@@ -2,39 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaDownload } from 'react-icons/fa';
 import Logo from '../assets/logo.png';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef(null);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#techstack' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Services', href: '#services' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', sectionId: 'home' },
+    { name: 'About', sectionId: 'about' },
+    { name: 'Skills', sectionId: 'techstack' },
+    { name: 'Projects', sectionId: 'projects' },
+    { name: 'Experience', sectionId: 'experience' },
+    { name: 'Services', sectionId: 'services' },
+    { name: 'Contact', sectionId: 'contact' },
   ];
 
-  // Smooth scroll function
-  const scrollToSection = (e, href) => {
-    e.preventDefault();
-    if (href === '#home' || href === '#') {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    } else {
-      const element = document.querySelector(href);
-      if (element) {
-        const offsetTop = element.offsetTop - 80; // Account for fixed header
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
-      }
-    }
+  const handleNavClick = (sectionId) => {
+    scrollToSection(sectionId);
     closeMobileMenu();
   };
 
@@ -78,7 +63,7 @@ const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, closeMobileMenu]);
 
   // Close menu on resize to desktop
   useEffect(() => {
@@ -87,7 +72,7 @@ const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [closeMobileMenu]);
 
   return (
    <>
@@ -100,23 +85,26 @@ const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
   >
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       {/* Logo */}
-      <a href="#home" onClick={(e) => scrollToSection(e, '#home')}>
-        <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }}>
+      <motion.button
+        type="button"
+        onClick={() => handleNavClick('home')}
+        className="flex items-center gap-3"
+        whileHover={{ scale: 1.05 }}
+      >
           <img src={Logo} alt="Logo" className="w-10 sm:w-12 md:w-14" />
           <span className="text-slate-800 font-bold text-lg sm:text-xl hidden sm:block">
             Chirag <span className="text-blue-600">Gohil</span>
           </span>
-        </motion.div>
-      </a>
+      </motion.button>
 
       {/* Desktop nav */}
       <nav className="hidden md:flex items-center">
         <ul className="flex space-x-6 lg:space-x-8">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <motion.a
-                href={link.href}
-                onClick={(e) => scrollToSection(e, link.href)}
+              <motion.button
+                type="button"
+                onClick={() => handleNavClick(link.sectionId)}
                 className="text-sm lg:text-base text-slate-600 hover:text-blue-600 transition-colors font-medium relative group"
                 whileHover={{ y: -2 }}
               >
@@ -125,7 +113,7 @@ const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
                   className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full"
                   initial={{ width: 0 }}
                 />
-              </motion.a>
+              </motion.button>
             </li>
           ))}
         </ul>
@@ -208,13 +196,13 @@ const Header = ({ isMobileMenuOpen, toggleMobileMenu, closeMobileMenu }) => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * index }}
                 >
-                  <a
-                    href={link.href}
-                    onClick={(e) => scrollToSection(e, link.href)}
-                    className="block text-lg sm:text-xl text-slate-700 hover:text-blue-600 transition-colors font-medium py-2"
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick(link.sectionId)}
+                    className="block w-full text-left text-lg sm:text-xl text-slate-700 hover:text-blue-600 transition-colors font-medium py-2"
                   >
                     {link.name}
-                  </a>
+                  </button>
                 </motion.li>
               ))}
             </ul>

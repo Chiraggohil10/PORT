@@ -10,6 +10,7 @@ import {
   FaCheckCircle,
   FaArrowRight,
 } from 'react-icons/fa';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const ServicesSection = () => {
   const services = [
@@ -209,15 +210,7 @@ const ServicesSection = () => {
             Have a specific requirement? Let us discuss your project scope.
           </p>
           <motion.button
-            onClick={() => {
-              const element = document.querySelector('#contact');
-              if (element) {
-                window.scrollTo({
-                  top: element.offsetTop - 80,
-                  behavior: 'smooth',
-                });
-              }
-            }}
+            onClick={() => scrollToSection('contact')}
             className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}

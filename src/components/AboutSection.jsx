@@ -10,6 +10,7 @@ import {
   FaUserCheck,
 } from 'react-icons/fa';
 import image from '../assets/img2.avif';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const AboutSection = () => {
   const skills = [
@@ -32,16 +33,6 @@ const AboutSection = () => {
     { value: '15+', label: 'Clients Supported' },
     { value: '99%', label: 'Delivery Focus' },
   ];
-
-  const scrollToContact = () => {
-    const element = document.querySelector('#contact');
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   return (
     <section id="about" className="relative overflow-hidden py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
@@ -98,6 +89,8 @@ const AboutSection = () => {
                   src={image}
                   alt="Chirag Gohil"
                   className="w-full h-[360px] sm:h-[440px] object-cover"
+                  loading="lazy"
+                  decoding="async"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.5 }}
                 />
@@ -110,7 +103,7 @@ const AboutSection = () => {
               </div>
 
               <motion.div
-                className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg flex items-center gap-2 whitespace-nowrap"
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg flex items-center gap-2"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -216,7 +209,7 @@ const AboutSection = () => {
 
             <div className="flex flex-nowrap gap-3 sm:gap-4">
               <motion.button
-                onClick={scrollToContact}
+                onClick={() => scrollToSection('contact')}
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}

@@ -21,22 +21,52 @@ const ContactSection = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError("");
+    setSubmitSuccess(false);
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/gohilchirag90994@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          _subject: "Portfolio Contact Message",
+          _captcha: "false",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to submit right now.");
+      }
+
+      const result = await response.json();
+      if (result.success === false) {
+        throw new Error(result.message || "Submission failed.");
+      }
+
       setSubmitSuccess(true);
       setFormData({ name: "", email: "", message: "" });
       setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
+    } catch (error) {
+      setSubmitError(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactItems = [
@@ -224,6 +254,8 @@ const ContactSection = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
+                          required
+                          minLength={2}
                           className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           placeholder="Your name"
                         />
@@ -237,6 +269,7 @@ const ContactSection = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
+                          required
                           className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           placeholder="your@email.com"
                         />
@@ -251,12 +284,20 @@ const ContactSection = () => {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
+                        required
+                        minLength={10}
                         className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
                         placeholder="Tell me about your project, target users, timeline, and goals..."
                       />
                     </div>
 
                   </div>
+
+                  {submitError && (
+                    <p className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                      {submitError}
+                    </p>
+                  )}
 
                   <motion.button
                     type="submit"

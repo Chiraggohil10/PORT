@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaBriefcase, FaCode, FaGraduationCap, FaBuilding } from 'react-icons/fa';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const ExperienceSection = () => {
   const experiences = [
@@ -164,19 +165,11 @@ const ExperienceSection = () => {
         >
           <p className="text-sm sm:text-base text-slate-600 mb-4">Always eager to take on new challenges</p>
           <motion.button
-            onClick={() => {
-              const element = document.querySelector('#contact');
-              if (element) {
-                window.scrollTo({
-                  top: element.offsetTop - 80,
-                  behavior: 'smooth'
-                });
-              }
-            }}
+            onClick={() => scrollToSection('contact')}
             className="inline-block w-full sm:w-auto px-8 py-3 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer"
             whileHover={{ scale: 1.05 }}
           >
-            Let's Work Together
+            Let&apos;s Work Together
           </motion.button>
         </motion.div>
       </div>

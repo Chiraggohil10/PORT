@@ -10,15 +10,17 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa';
 import { IoMdMailUnread } from 'react-icons/io';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const Footer = () => {
   const quickLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Tech Stack', href: '#techstack' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Services', href: '#services' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', sectionId: 'home' },
+    { label: 'About', sectionId: 'about' },
+    { label: 'Tech Stack', sectionId: 'techstack' },
+    { label: 'Projects', sectionId: 'projects' },
+    { label: 'Experience', sectionId: 'experience' },
+    { label: 'Services', sectionId: 'services' },
+    { label: 'Contact', sectionId: 'contact' },
   ];
 
   const serviceHighlights = [
@@ -74,28 +76,30 @@ const Footer = () => {
                 I help teams ship modern, fast, and scalable web products with clean architecture and polished user experience.
               </p>
 
-              <motion.a
-                href="#contact"
+              <motion.button
+                type="button"
+                onClick={() => scrollToSection('contact')}
                 whileHover={{ x: 3 }}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white text-sm sm:text-base font-semibold hover:bg-slate-800 transition-colors"
               >
                 Start Your Project
                 <FaArrowRight className="text-sm" />
-              </motion.a>
+              </motion.button>
             </div>
 
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1.3fr] gap-6 sm:gap-8">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-[0.9fr_1.3fr_1.3fr] gap-6 sm:gap-8">
               <div>
                 <h3 className="text-sm font-bold tracking-wide text-slate-900 mb-3">Quick Links</h3>
                 <ul className="space-y-2.5">
                   {quickLinks.map((link) => (
                     <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-sm sm:text-base text-slate-600 hover:text-blue-700 transition-colors"
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection(link.sectionId)}
+                        className="text-sm sm:text-base text-slate-600 hover:text-blue-700 transition-colors text-left"
                       >
                         {link.label}
-                      </a>
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -107,7 +111,7 @@ const Footer = () => {
                   {serviceHighlights.map((service) => (
                     <li key={service} className="flex items-center gap-2.5 text-sm sm:text-base text-slate-600">
                       <FaCheckCircle className="text-blue-600 text-xs shrink-0" />
-                      <span className="leading-none whitespace-nowrap">{service}</span>
+                      <span className="leading-tight">{service}</span>
                     </li>
                   ))}
                 </ul>

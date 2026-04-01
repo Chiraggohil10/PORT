@@ -1,22 +1,11 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCode, FaTerminal } from 'react-icons/fa';
-import Chirag from '../assets/images.jpg';
+import Chirag from '../assets/chirag1.png';
+import { scrollToSection } from '../utils/scrollToSection';
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const scrollToSection = (e, href) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -30,52 +19,37 @@ const HeroSection = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-
-
   return (
     <section id="home" className="relative min-h-screen px-4 sm:px-6 lg:px-8 flex items-center justify-center overflow-hidden pt-20">
       <div className="section-solid-bg" />
-
-      {/* Grid pattern */}
       <div className="section-grid-pattern" />
 
-      {/* Floating blobs */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
       <motion.div
         className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.5, 0.3, 0.5],
-        }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
         transition={{ duration: 8, repeat: Infinity, delay: 2 }}
       />
 
-
-
       <div className="section-wrap px-0 py-14 sm:py-16 lg:py-20">
         <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-10 lg:gap-12 xl:gap-16">
-          {/* Left content */}
           <motion.div
             className="w-full lg:w-1/2 lg:pr-4 xl:pr-6 text-center lg:text-left"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-
             <motion.h1
               className="text-fluid-display font-bold text-slate-900 mb-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Hi, I'm{' '}
+              Hi, I&apos;m{' '}
               <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Chirag Gohil
               </span>
@@ -107,7 +81,7 @@ const HeroSection = () => {
               transition={{ delay: 0.6 }}
             >
               <motion.button
-                onClick={(e) => scrollToSection(e, '#projects')}
+                onClick={() => scrollToSection('projects')}
                 className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -116,7 +90,7 @@ const HeroSection = () => {
               </motion.button>
 
               <motion.button
-                onClick={(e) => scrollToSection(e, '#contact')}
+                onClick={() => scrollToSection('contact')}
                 className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 bg-white text-sm sm:text-base text-blue-600 font-semibold rounded-xl border-2 border-blue-200 shadow-md hover:shadow-lg hover:border-blue-300 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -125,7 +99,6 @@ const HeroSection = () => {
               </motion.button>
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               className="grid grid-cols-3 gap-4 sm:gap-6 mt-10 sm:mt-12"
               initial={{ opacity: 0, y: 20 }}
@@ -137,21 +110,14 @@ const HeroSection = () => {
                 { number: '20+', label: 'Projects Completed' },
                 { number: '15+', label: 'Happy Clients' },
               ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center lg:text-left"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">
-                    {stat.number}
-                  </div>
+                <motion.div key={index} className="text-center lg:text-left" whileHover={{ scale: 1.1 }}>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">{stat.number}</div>
                   <div className="text-xs sm:text-sm text-slate-600 mt-1">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Right content - Profile Image */}
           <motion.div
             className="w-full lg:w-1/2 lg:pl-4 xl:pl-6 flex justify-center lg:justify-end"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -182,6 +148,8 @@ const HeroSection = () => {
                     src={Chirag}
                     alt="Chirag Gohil"
                     className="h-[23rem] sm:h-[28rem] lg:h-[28rem] w-full object-cover object-top"
+                    decoding="async"
+                    fetchPriority="high"
                     whileHover={{ scale: 1.06 }}
                     transition={{ duration: 0.45 }}
                   />
@@ -230,4 +198,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

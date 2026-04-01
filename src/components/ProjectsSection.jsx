@@ -2,9 +2,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
-import Project1 from "../assets/project1.png";
-import Tomatoo from "../assets/tomatoo.png";
-import Amazone from "../assets/amazone.png";
+import Project1 from "../assets/project1.webp";
+import Tomatoo from "../assets/tomatoo.webp";
+import Amazone from "../assets/amazone.webp";
 
 const ProjectsSection = () => {
   const projects = [
@@ -17,8 +17,8 @@ const ProjectsSection = () => {
         "Our project provides every facility for college management like student records, faculty records, attendance tracking, exam management, and fee receipts. By making this project we learned that teamwork and unity make all things possible.",
       image: Project1,
       tags: ["React", "Node.js", "MongoDB", "Express"],
-      demoLink: "#",
-      githubLink: "#",
+      demoLink: null,
+      githubLink: null,
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ const ProjectsSection = () => {
       image: Tomatoo,
       tags: ["React", "Bootstrap", "API Integration"],
       demoLink: "https://testy-food-delivery.netlify.app/",
-      githubLink: "#",
+      githubLink: null,
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ const ProjectsSection = () => {
       image: Amazone,
       tags: ["HTML5", "CSS3", "Responsive Design"],
       demoLink: "https://learnamazon.netlify.app/",
-      githubLink: "#",
+      githubLink: null,
     },
   ];
 
@@ -77,91 +77,100 @@ const ProjectsSection = () => {
         </motion.div>
 
         <div className="space-y-10 sm:space-y-12 lg:space-y-14">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.id}
-              className="relative"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: index * 0.08 }}
-            >
-              <div className={`pointer-events-none absolute -inset-4`} />
+          {projects.map((project, index) => {
+            const hasDemoLink = typeof project.demoLink === "string" && project.demoLink.startsWith("http");
+            const hasGithubLink = typeof project.githubLink === "string" && project.githubLink.startsWith("http");
 
-              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10 items-center">
-                <motion.div
-                  className={`lg:col-span-5 ${index % 2 === 1 ? "lg:order-2" : ""}`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.35 }}
-                >
-                  <div className="relative overflow-hidden aspect-[16/10] rounded-[1.75rem] ring-1 ring-slate-200 bg-slate-100">
-                    <motion.img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.55 }}
-                    />
-                  </div>
-                </motion.div>
+            return (
+              <motion.article
+                key={project.id}
+                className="relative"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.65, delay: index * 0.08 }}
+              >
+                <div className="pointer-events-none absolute -inset-4" />
 
-                <div className={`lg:col-span-7 ${index % 2 === 1 ? "lg:order-1" : ""}`}>
-                  
+                <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10 items-center">
+                  <motion.div
+                    className={`lg:col-span-5 ${index % 2 === 1 ? "lg:order-2" : ""}`}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div className="relative overflow-hidden aspect-[16/10] rounded-[1.75rem] ring-1 ring-slate-200 bg-slate-100">
+                      <motion.img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        whileHover={{ scale: 1.08 }}
+                        transition={{ duration: 0.55 }}
+                      />
+                    </div>
+                  </motion.div>
 
-                  <h3 className="text-fluid-h3 font-bold text-slate-900 mb-3 break-words">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed break-words mb-3">
-                    {project.description}
-                  </p>
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed break-words mb-5">
-                    {project.details}
-                  </p>
+                  <div className={`lg:col-span-7 ${index % 2 === 1 ? "lg:order-1" : ""}`}>
+                    <h3 className="text-fluid-h3 font-bold text-slate-900 mb-3 break-words">{project.title}</h3>
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed break-words mb-3">
+                      {project.description}
+                    </p>
+                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed break-words mb-5">
+                      {project.details}
+                    </p>
 
-                  <div className="flex flex-wrap gap-2.5 mb-6">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-700 border border-slate-300 rounded-full bg-white/70"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="flex flex-wrap gap-2.5 mb-6">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-700 border border-slate-300 rounded-full bg-white/70"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className="flex flex-wrap items-center gap-5 sm:gap-6">
-                    {project.demoLink && (
-                      <motion.a
-                        href={project.demoLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-blue-700 hover:text-blue-800 transition-colors"
-                        whileHover={{ x: 4 }}
-                      >
-                        Live Demo <FaExternalLinkAlt className="text-sm" />
-                      </motion.a>
-                    )}
+                    <div className="flex flex-wrap items-center gap-5 sm:gap-6">
+                      {hasDemoLink && (
+                        <motion.a
+                          href={project.demoLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-blue-700 hover:text-blue-800 transition-colors"
+                          whileHover={{ x: 4 }}
+                        >
+                          Live Demo <FaExternalLinkAlt className="text-sm" />
+                        </motion.a>
+                      )}
 
-                    {project.githubLink && (
-                      <motion.a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-slate-700 hover:text-slate-900 transition-colors"
-                        whileHover={{ x: 4 }}
-                      >
-                        Source Code <FaGithub className="text-base" />
-                      </motion.a>
-                    )}
+                      {hasGithubLink && (
+                        <motion.a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-slate-700 hover:text-slate-900 transition-colors"
+                          whileHover={{ x: 4 }}
+                        >
+                          Source Code <FaGithub className="text-base" />
+                        </motion.a>
+                      )}
+
+                      {!hasDemoLink && !hasGithubLink && (
+                        <p className="text-sm sm:text-base font-medium text-slate-500">
+                          Private project details available on request.
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {index < projects.length - 1 && (
-                <div className="mt-10 sm:mt-12 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
-              )}
-            </motion.article>
-          ))}
+                {index < projects.length - 1 && (
+                  <div className="mt-10 sm:mt-12 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+                )}
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   FaArrowRight,
   FaCode,
@@ -13,223 +13,186 @@ import image from '../assets/img2.avif';
 import { scrollToSection } from '../utils/scrollToSection';
 
 const AboutSection = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   const skills = [
-    { name: 'Frontend Engineering', level: 92, icon: FaCode, color: 'from-sky-500 to-blue-600' },
-    { name: 'Backend Architecture', level: 87, icon: FaServer, color: 'from-indigo-500 to-violet-600' },
-    { name: 'Responsive UX', level: 95, icon: FaMobileAlt, color: 'from-cyan-500 to-blue-600' },
-    { name: 'Product Delivery', level: 89, icon: FaRocket, color: 'from-blue-600 to-indigo-700' },
+    { name: 'React.js & Frontend Architecture', level: 94, icon: FaCode, color: 'from-blue-500 to-indigo-600' },
+    { name: 'Node.js & Backend Architecture', level: 88, icon: FaServer, color: 'from-violet-500 to-purple-600' },
+    { name: 'Mobile-First Responsive UX', level: 95, icon: FaMobileAlt, color: 'from-cyan-500 to-blue-600' },
+    { name: 'Performance & Optimization', level: 90, icon: FaRocket, color: 'from-blue-600 to-indigo-700' },
   ];
 
   const highlights = [
-    'Scalable UI',
-    'API-first',
-    'Accessible UX',
-    'High performance',
+    { title: 'Scalable UI', desc: 'Modular components structured for enterprise extension.' },
+    { title: 'API-First', desc: 'Secure Restful API endpoints built on clear schemas.' },
+    { title: 'Accessible UX', desc: 'A11y compliant layouts offering inclusive interfaces.' },
+    { title: 'High Performance', desc: 'Light bundle weights ensuring rapid load performance.' },
   ];
 
   const stats = [
-    { value: '3+', label: 'Years Experience' },
-    { value: '20+', label: 'Projects Completed' },
-    { value: '15+', label: 'Clients Supported' },
-    { value: '99%', label: 'Delivery Focus' },
+    { value: '3+', label: 'Years Exp' },
+    { value: '20+', label: 'Projects' },
+    { value: '15+', label: 'Clients' },
+    { value: '100%', label: 'Delivery' },
   ];
 
-  return (
-    <section id="about" className="relative overflow-hidden py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
-      <div className="section-solid-bg" />
-      <div className="section-grid-pattern" />
+  const handleResumeDownload = () => {
+    // Log CV download event (Resume Download Tracking)
+    console.log('[Analytics] Resume downloaded at: ' + new Date().toISOString());
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cv_download_timestamp', new Date().toISOString());
+    }
+  };
 
-      <motion.div
-        className="absolute -top-20 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-400/20 blur-3xl"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.35, 0.5, 0.35] }}
-        transition={{ duration: 7, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl"
-        animate={{ scale: [1.15, 1, 1.15], opacity: [0.3, 0.45, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, delay: 1.2 }}
-      />
+  return (
+    <section id="about" className="relative py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-200/80 dark:border-zinc-800/80">
+      {/* Decorative blurred backgrounds */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] h-[350px] rounded-full bg-blue-500/10 dark:bg-blue-500/5 blur-3xl pointer-events-none" />
 
       <div className="section-wrap">
+        {/* Section Header */}
         <motion.div
-          className="text-center mb-12 sm:mb-14 lg:mb-16"
-          initial={{ opacity: 0, y: 26 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-4">
-            ABOUT ME
+          <span className="inline-flex px-3.5 py-1.5 rounded-full border border-blue-500/10 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-4">
+            About Me
           </span>
-          <h2 className="text-fluid-h2 font-bold text-slate-900 mb-4">
-            Building products that feel{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              fast, clean, and reliable
+          <h2 className="text-fluid-h2 font-extrabold text-zinc-900 dark:text-zinc-50 mb-4 font-display">
+            From design concepts to{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+              production-grade delivery
             </span>
           </h2>
-          <p className="text-fluid-body text-slate-600 max-w-5xl mx-auto">
-            I design and develop full-stack web experiences with clear architecture, modern UX patterns, and
-            production-ready quality.
+          <p className="text-fluid-body text-zinc-500 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+            I am a full-stack engineer focused on clean code, responsive layouts, and performance optimization. 
+            I bridge design and engineering to build modern web products with modular, maintainable code structures.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        {/* Bento/Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          {/* Visual Column - Avatar & Quick Stats */}
           <motion.div
-            className="lg:col-span-5"
-            initial={{ opacity: 0, x: -40 }}
+            className="lg:col-span-5 w-full flex flex-col items-center"
+            initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.75 }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="relative mx-auto max-w-md pb-12">
-              <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-cyan-500/20 blur-xl" />
+            <div className="relative w-full max-w-[360px] pb-8">
+              {/* Blur behind image */}
+              <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-violet-500/20 dark:from-blue-500/10 blur-xl pointer-events-none" />
 
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-2xl">
-                <motion.img
+              <div className="glow-card relative p-2 shadow-xl">
+                <img
                   src={image}
-                  alt="Chirag Gohil"
-                  className="w-full h-[360px] sm:h-[440px] object-cover"
+                  alt="Chirag Gohil Coding"
+                  className="w-full aspect-[4/5] object-cover rounded-xl filter grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-500"
                   loading="lazy"
                   decoding="async"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.5 }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/35 via-transparent to-transparent" />
-
-                <div className="absolute left-4 right-4 bottom-4 rounded-2xl border border-white/30 bg-white/90 backdrop-blur px-4 py-3">
-                  <p className="text-slate-900 font-bold text-base sm:text-lg">Full Stack Developer</p>
-                  <p className="text-slate-600 text-xs sm:text-sm">React | Node.js | API Design | Cloud Deployment</p>
+                
+                {/* Floating badge */}
+                <div className="absolute top-4 left-4 rounded-xl border border-white/10 bg-zinc-900/90 backdrop-blur-md px-3 py-1.5 shadow-md flex items-center gap-1.5">
+                  <FaUserCheck className="text-emerald-500 text-xs animate-pulse" />
+                  <span className="text-[10px] font-bold text-white tracking-wider uppercase">User Centered</span>
                 </div>
               </div>
-
-              <motion.div
-                className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg flex items-center gap-2"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.35 }}
-              >
-                <span className="text-xs sm:text-sm font-semibold">Focused on scalable delivery</span>
-              </motion.div>
-
-              <motion.div
-                className="hidden sm:flex absolute top-4 left-4 rounded-xl border border-blue-100 bg-white shadow-lg px-3 py-2 items-center gap-2"
-                initial={{ opacity: 0, x: -18 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.45 }}
-              >
-                <FaUserCheck className="text-blue-600 text-sm" />
-                <span className="text-xs font-semibold text-slate-700">User-Centered Build</span>
-              </motion.div>
             </div>
 
-            <div className="mt-8 sm:mt-10 space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                {highlights.map((item, index) => (
-                  <motion.div
-                    key={item}
-                    className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm sm:text-base font-medium text-slate-700 shadow-sm"
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.08 }}
-                  >
-                    {item}
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-4 gap-3">
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm"
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 + index * 0.07 }}
-                  >
-                    <p className="text-xl sm:text-2xl font-bold text-blue-600">{stat.value}</p>
-                    <p className="text-[11px] sm:text-xs text-slate-600 mt-1">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </div>
+            {/* Micro Stats Grid */}
+            <div className="w-full max-w-[360px] grid grid-cols-4 gap-2.5 mt-2">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="glow-card p-3 text-center shadow-sm"
+                >
+                  <p className="text-lg font-bold text-blue-600 dark:text-blue-500 font-display leading-tight">{stat.value}</p>
+                  <p className="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
+          {/* Details Column - Text & Progress Bars */}
           <motion.div
-            className="lg:col-span-7"
-            initial={{ opacity: 0, x: 40 }}
+            className="lg:col-span-7 w-full"
+            initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.75 }}
+            transition={{ duration: 0.6 }}
           >
-            <h3 className="text-fluid-h3 font-bold text-slate-900 mb-5">
-              From concept to deployment with modern engineering standards
+            <h3 className="text-fluid-h3 font-bold text-zinc-900 dark:text-zinc-50 mb-5 font-display">
+              Technical excellence meets structured engineering.
             </h3>
-
-            <p className="text-fluid-body text-slate-600 mb-4">
-              I build maintainable applications by combining thoughtful UI design, clean backend logic, and strong
-              performance practices. My approach keeps products easy to scale as requirements evolve.
-            </p>
-            <p className="text-fluid-body text-slate-600 mb-7">
-              Every project is developed with clarity in code structure, responsiveness across devices, and a focus on
-              real business outcomes.
+            
+            <p className="text-fluid-body text-zinc-500 dark:text-zinc-400 mb-6 leading-relaxed">
+              I specialize in frontend technologies, specifically constructing reusable UI systems with React, 
+              managing application states efficiently, and optimizing bundle delivery to achieve fast FCP times. 
+              Additionally, I build clean REST APIs using Node.js, Express, and MongoDB.
             </p>
 
+            {/* Technical Highlights list */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              {highlights.map((item) => (
+                <div key={item.title} className="glow-card p-4 hover:border-zinc-300 dark:hover:border-zinc-700 shadow-xs">
+                  <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-50 font-display">{item.title}</h4>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Core Skills Progress bar */}
             <div className="space-y-4 mb-8">
               {skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.15 + index * 0.08 }}
-                >
-                  <div className="flex items-center justify-between gap-3 mb-2">
+                <div key={skill.name}>
+                  <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
-                      <skill.icon className="text-blue-600 text-sm" />
-                      <span className="text-sm sm:text-base font-semibold text-slate-700">{skill.name}</span>
+                      <skill.icon className="text-blue-600 dark:text-blue-500 text-xs" />
+                      <span className="text-xs sm:text-sm font-bold text-zinc-700 dark:text-zinc-300">{skill.name}</span>
                     </div>
-                    <span className="text-xs sm:text-sm font-bold text-blue-600">{skill.level}%</span>
+                    <span className="text-xs font-bold text-blue-600 dark:text-blue-500">{skill.level}%</span>
                   </div>
-                  <div className="h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                     <motion.div
                       className={`h-full rounded-full bg-gradient-to-r ${skill.color}`}
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.95, delay: 0.2 + index * 0.08 }}
+                      transition={{ duration: prefersReducedMotion ? 0.2 : 0.8, delay: 0.1 * index }}
                     />
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            <div className="flex flex-nowrap gap-3 sm:gap-4">
-              <motion.button
+            {/* Resume / Contact Button Action Row */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <button
                 onClick={() => scrollToSection('contact')}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold shadow-lg hover:shadow-xl transition-all"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 text-sm font-semibold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all cursor-pointer shadow-md"
               >
-                Contact Me
-                <FaArrowRight className="text-sm" />
-              </motion.button>
+                <span>Hire Me</span>
+                <FaArrowRight className="text-xxs" />
+              </button>
 
-              <motion.a
+              <a
                 href="/ChiragGohilResume.pdf"
                 download="ChiragGohilResume.pdf"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border-2 border-blue-200 bg-white text-sm sm:text-base text-blue-600 font-semibold shadow-md hover:shadow-lg transition-all"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
+                onClick={handleResumeDownload}
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-zinc-200 text-zinc-900 dark:bg-zinc-900/60 dark:border-zinc-800 dark:text-zinc-50 text-sm font-semibold rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer shadow-sm"
               >
-                Download CV
-                <FaDownload className="text-sm" />
-              </motion.a>
+                <span>Download Resume</span>
+                <FaDownload className="text-xs" />
+              </a>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

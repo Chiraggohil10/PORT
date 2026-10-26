@@ -7,218 +7,159 @@ import {
   FaMobileAlt,
   FaRocket,
   FaPalette,
-  FaCheckCircle,
+  FaCheck,
   FaArrowRight,
 } from 'react-icons/fa';
 import { scrollToSection } from '../utils/scrollToSection';
 
 const ServicesSection = () => {
+
   const services = [
     {
       icon: FaLaptopCode,
-      title: 'Frontend Development',
-      description:
-        'Crafting fast and polished user interfaces with React and Next.js, focused on clean structure, accessibility, and smooth interactions.',
+      title: 'Frontend Engineering',
+      description: 'Building optimized user interfaces with React and Next.js, focused on accessibility, modularity, and clean structure.',
       color: '#3B82F6',
-      features: [
-        'React.js and Next.js',
-        'Tailwind CSS and SCSS',
-        'Reusable components',
-        'Mobile-first responsive layouts',
-        'Cross-browser compatibility',
-        'State management patterns',
-      ],
-      tags: ['UI Engineering', 'SPA', 'SSR'],
+      features: ['SPA and dynamic SSR rendering', 'Context / Redux state flows', 'Tailwind / CSS-in-JS variables'],
     },
     {
       icon: FaServer,
-      title: 'Backend Development',
-      description:
-        'Building secure APIs and scalable backend systems with robust validation, authentication, and production-ready architecture.',
+      title: 'Backend Architecture',
+      description: 'Building secure server logic and databases with robust schema validation, authorization patterns, and REST endpoints.',
       color: '#8B5CF6',
-      features: [
-        'Node.js and Express.js',
-        'REST API architecture',
-        'JWT and OAuth authentication',
-        'MongoDB and SQL design',
-        'Validation and error handling',
-        'Scalable service structure',
-      ],
-      tags: ['API', 'Security', 'Database'],
+      features: ['Node.js & Express servers', 'JWT auth & security validation', 'MongoDB indexing & schemas'],
     },
     {
       icon: FaCode,
       title: 'Full Stack Solutions',
-      description:
-        'Delivering complete products from planning to deployment with consistent engineering standards across frontend and backend.',
+      description: 'Delivering end-to-end applications from database design to hosting setups with consistent coding practices.',
       color: '#EC4899',
-      features: [
-        'MERN stack delivery',
-        '3rd-party API integrations',
-        'Cloud deployment workflows',
-        'CI/CD setup',
-        'Version control discipline',
-        'Production optimization',
-      ],
-      tags: ['End-to-End', 'Deployment', 'Scalable'],
+      features: ['MERN stack integration', 'RESTful API endpoints client sync', 'Secure hosting & environmental checks'],
     },
     {
       icon: FaMobileAlt,
-      title: 'Responsive Design',
-      description:
-        'Ensuring consistent UX across mobiles, tablets, and desktops with adaptive grids, touch-friendly layouts, and accessibility in mind.',
+      title: 'Responsive & Adaptive UI',
+      description: 'Constructing mobile-first layouts that scale across sizes with fluid grids, touch targets, and flexible grids.',
       color: '#10B981',
-      features: [
-        'Mobile-first strategy',
-        'Fluid layout systems',
-        'Cross-device testing',
-        'PWA-ready foundations',
-        'Touch-friendly interactions',
-        'Visual consistency',
-      ],
-      tags: ['Mobile UX', 'Adaptive', 'PWA'],
+      features: ['Adaptive breakpoint scaling', 'Touch-friendly buttons layout', 'Cross-browser rendering tests'],
     },
     {
       icon: FaRocket,
-      title: 'Performance Optimization',
-      description:
-        'Improving speed and discoverability with practical optimization techniques for core web vitals, SEO, and runtime efficiency.',
+      title: 'Speed & Optimization',
+      description: 'Optimizing bundle payloads, asset weights, and rendering paths to ensure top Core Web Vital grades.',
       color: '#F59E0B',
-      features: [
-        'Core Web Vitals tuning',
-        'Code splitting and lazy loading',
-        'Image and asset optimization',
-        'SEO best practices',
-        'Caching strategies',
-        'Bundle size reduction',
-      ],
-      tags: ['Speed', 'SEO', 'Optimization'],
+      features: ['Dynamic imports & dynamic chunks', 'WebP compressing asset conversions', 'Lighthouse audit improvements'],
     },
     {
       icon: FaPalette,
-      title: 'UI/UX Implementation',
-      description:
-        'Converting design files into production interfaces with clean details, meaningful transitions, and accessibility-first implementation.',
+      title: 'UI/UX Implementations',
+      description: 'Converting Figma mockups to pixel-perfect frontend code with precise styling offsets and transitions.',
       color: '#06B6D4',
-      features: [
-        'Figma/XD to code',
-        'Pixel-accurate implementation',
-        'Micro-interactions',
-        'Accessibility-friendly markup',
-        'Design system consistency',
-        'User-focused execution',
-      ],
-      tags: ['Design', 'UX', 'Accessibility'],
+      features: ['Accurate Figma design conversions', 'Micro-interactions & hover animations', 'Accessible semantic HTML structures'],
     },
   ];
 
   return (
-    <section id="services" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="section-solid-bg" />
-      <div className="section-grid-pattern" />
-
+    <section id="services" className="relative py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-200/80 dark:border-zinc-800/80">
       <div className="section-wrap">
+        
+        {/* Section Header */}
         <motion.div
-          className="text-center mb-12 sm:mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
-          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
-            SERVICES
+          <span className="inline-block px-3.5 py-1.5 rounded-full border border-blue-500/10 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-4">
+            Services
           </span>
-          <h2 className="text-fluid-h2 font-bold text-slate-900 mb-4">
-            What I <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Deliver</span>
+          <h2 className="text-fluid-h2 font-extrabold text-zinc-900 dark:text-zinc-50 mb-4 font-display">
+            Scope of dynamic{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+              web solutions
+            </span>
           </h2>
-          <p className="text-fluid-body text-slate-600 max-w-4xl mx-auto">
-            Practical and scalable development services, designed for modern products and real business use-cases.
+          <p className="text-fluid-body text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            Scalable development services built to address real-world business challenges and code quality rules.
           </p>
         </motion.div>
 
-        <div className="space-y-4 sm:space-y-6">
+        {/* Bento Grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <motion.article
               key={service.title}
-              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/90 shadow-sm hover:shadow-xl transition-shadow"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: index * 0.06 }}
-              whileHover={{ y: -4 }}
+              transition={{ duration: 0.45, delay: index * 0.05 }}
+              className="glow-card p-6 flex flex-col justify-between hover:border-zinc-300 dark:hover:border-zinc-700 shadow-sm relative group"
             >
-              <div className="absolute top-0 left-0 h-full w-1.5" style={{ backgroundColor: service.color }} />
+              {/* Highlight corner bar */}
+              <div 
+                className="absolute top-0 left-0 w-1.5 h-full rounded-l-2xl transition-all duration-300 group-hover:w-2"
+                style={{ backgroundColor: service.color }}
+              />
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 p-5 sm:p-6 lg:p-8">
-                <div className="lg:col-span-4">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div
-                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${service.color}20` }}
-                    >
-                      <service.icon className="text-2xl sm:text-3xl" style={{ color: service.color }} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight break-words">{service.title}</h3>
-                    </div>
+              <div className="pl-2">
+                {/* Icon & Title */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: `${service.color}15` }}
+                  >
+                    <service.icon className="text-xl" style={{ color: service.color }} />
                   </div>
+                  <h3 className="text-lg font-extrabold text-zinc-900 dark:text-zinc-50 font-display leading-tight">
+                    {service.title}
+                  </h3>
+                </div>
 
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed break-words mb-4">
-                    {service.description}
-                  </p>
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">
+                  {service.description}
+                </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 text-xs font-semibold tracking-wide uppercase rounded-full border border-slate-200 text-slate-600 bg-slate-50"
+                {/* Bullet List */}
+                <ul className="space-y-2.5">
+                  {service.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+                      <span 
+                        className="w-4 h-4 rounded-md flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ backgroundColor: `${service.color}10` }}
                       >
-                        {tag}
+                        <FaCheck className="text-[8px]" style={{ color: service.color }} />
                       </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="lg:col-span-8">
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {service.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-white"
-                      >
-                        <span className="w-5 h-5 flex items-center justify-center shrink-0">
-                          <FaCheckCircle className="text-[14px]" style={{ color: service.color }} />
-                        </span>
-                        <span className="text-sm sm:text-base text-slate-700 break-words leading-5 sm:leading-6">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                      <span className="leading-tight">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.article>
           ))}
         </div>
 
+        {/* Footer CTA */}
         <motion.div
-          className="mt-12 sm:mt-16 text-center"
+          className="mt-16 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
         >
-          <p className="text-sm sm:text-base text-slate-600 mb-5">
-            Have a specific requirement? Let us discuss your project scope.
+          <p className="text-xs sm:text-sm font-semibold text-zinc-500 dark:text-zinc-400 mb-5">
+            Looking for a custom integration or consultancy? Let us outline the specs.
           </p>
-          <motion.button
+          <button
             onClick={() => scrollToSection('contact')}
-            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 text-sm font-semibold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all cursor-pointer shadow-md"
           >
-            Start a Project
-            <FaArrowRight className="text-sm" />
-          </motion.button>
+            <span>Start a Project</span>
+            <FaArrowRight className="text-xxs animate-pulse" />
+          </button>
         </motion.div>
+
       </div>
     </section>
   );

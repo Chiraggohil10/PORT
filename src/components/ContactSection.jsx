@@ -1,6 +1,5 @@
-// src/components/ContactSection.js
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   FaEnvelope,
   FaMapMarkerAlt,
@@ -10,346 +9,392 @@ import {
   FaLinkedin,
   FaInstagram,
   FaCheckCircle,
-} from "react-icons/fa";
+  FaExclamationCircle,
+} from 'react-icons/fa';
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState("");
+  const [submitError, setSubmitError] = useState('');
+
+  const contactItems = [
+    {
+      icon: FaEnvelope,
+      label: 'Email',
+      value: 'gohilchirag90994@gmail.com',
+      href: 'mailto:gohilchirag90994@gmail.com',
+      color: '#3B82F6',
+    },
+    {
+      icon: FaPhone,
+      label: 'Phone',
+      value: '+91 90994 23494',
+      href: 'tel:+919099423494',
+      color: '#8B5CF6',
+    },
+    {
+      icon: FaMapMarkerAlt,
+      label: 'Location',
+      value: 'Bangalore, India',
+      href: null,
+      color: '#06B6D4',
+    },
+  ];
+
+  const socialLinks = [
+    { icon: FaGithub, href: 'https://github.com/Chiraggohil10', label: 'GitHub' },
+    { icon: FaLinkedin, href: 'https://www.linkedin.com/in/chirag-gohil-42b261255/', label: 'LinkedIn' },
+    { icon: FaInstagram, href: 'https://www.instagram.com/chirag_gohil_1910/', label: 'Instagram' },
+  ];
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitError("");
+    if (!validate()) return;
+
+    setSubmitError('');
     setSubmitSuccess(false);
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/gohilchirag90994@gmail.com", {
-        method: "POST",
+      const response = await fetch('https://formsubmit.co/ajax/gohilchirag90994@gmail.com', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           name: formData.name.trim(),
           email: formData.email.trim(),
           message: formData.message.trim(),
-          _subject: "Portfolio Contact Message",
-          _captcha: "false",
+          _subject: 'Portfolio Contact Message',
+          _captcha: 'false',
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Unable to submit right now.");
+        throw new Error('Unable to submit your message at this time.');
       }
 
       const result = await response.json();
-      if (result.success === false) {
-        throw new Error(result.message || "Submission failed.");
+      if (result.success === 'false' || result.success === false) {
+        throw new Error(result.message || 'Submission failed.');
       }
 
       setSubmitSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setSubmitSuccess(false), 5000);
     } catch (error) {
-      setSubmitError(error.message || "Something went wrong. Please try again.");
+      setSubmitError(error.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const contactItems = [
-    {
-      icon: FaEnvelope,
-      label: "Email",
-      value: "gohilchirag90994@gmail.com",
-      href: "mailto:gohilchirag90994@gmail.com",
-      color: "#2563EB",
-    },
-    {
-      icon: FaPhone,
-      label: "Phone",
-      value: "+91 90994 23494",
-      href: "tel:+919099423494",
-      color: "#7C3AED",
-    },
-    {
-      icon: FaMapMarkerAlt,
-      label: "Location",
-      value: "Bangalore, India",
-      href: null,
-      color: "#0891B2",
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: FaGithub,
-      href: "https://github.com/Chiraggohil10",
-      label: "GitHub",
-    },
-    {
-      icon: FaLinkedin,
-      href: "https://www.linkedin.com/in/chirag-gohil-42b261255/",
-      label: "LinkedIn",
-    },
-    {
-      icon: FaInstagram,
-      href: "https://www.instagram.com/chirag_gohil_1910/",
-      label: "Instagram",
-    },
-  ];
-
-  const submitButtonColorClass =
-    submitSuccess && !isSubmitting
-      ? "bg-gradient-to-r from-emerald-500 to-green-600"
-      : "bg-gradient-to-r from-blue-600 to-indigo-600";
-
   return (
-    <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="section-solid-bg" />
-      <div className="section-grid-pattern" />
-
-      <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-64 bg-blue-300/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-6 right-12 w-56 h-56 bg-indigo-300/15 rounded-full blur-3xl pointer-events-none" />
+    <section id="contact" className="relative py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-200/80 dark:border-zinc-800/80">
+      {/* Background decor */}
+      <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/2 rounded-full blur-3xl pointer-events-none" />
 
       <div className="section-wrap">
+        
+        {/* Section Header */}
         <motion.div
-          className="text-center mb-12 sm:mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.5 }}
         >
-          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
-            GET IN TOUCH
+          <span className="inline-block px-3.5 py-1.5 rounded-full border border-blue-500/10 bg-blue-500/5 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-4">
+            Contact
           </span>
-          <h2 className="text-fluid-h2 font-bold text-slate-900 mb-4">
-            Let us build your <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">next project</span>
+          <h2 className="text-fluid-h2 font-extrabold text-zinc-900 dark:text-zinc-50 mb-4 font-display">
+            Start a project or{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+              say hello
+            </span>
           </h2>
-          <p className="text-fluid-body text-slate-600 max-w-3xl mx-auto">
-            Share your idea, timeline, or requirement. I will respond with a clear execution plan.
+          <p className="text-fluid-body text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            Outline your roadmap, design needs, or questions, and I will get back within 24 hours.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-stretch gap-6 sm:gap-8">
+        {/* Form & details grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
+          
+          {/* Details Card */}
           <motion.div
             className="lg:col-span-5 h-full"
-            initial={{ opacity: 0, x: -35 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-5 sm:p-6 lg:p-7 shadow-sm h-full">
-              <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500" />
+            <div className="glow-card p-6 sm:p-8 flex flex-col justify-between h-full relative overflow-hidden">
+              {/* Corner colored accent */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
+              
+              <div>
+                <h3 className="text-lg sm:text-xl font-extrabold text-zinc-900 dark:text-zinc-50 font-display mb-4">
+                  Connect Details
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8">
+                  Direct communication channels. Feel free to copy my email or click links to launch calls/chats.
+                </p>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">Contact Information</h3>
-              <p className="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
-                Fast communication, clear updates, and delivery-focused collaboration.
-              </p>
-
-              <div className="space-y-3.5 mb-6">
-                {contactItems.map((item, index) => (
-                  <motion.div
-                    key={item.label}
-                    className="rounded-2xl border border-slate-200 bg-slate-50/70 p-3.5 sm:p-4"
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.08 * index }}
-                  >
-                    <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-3.5">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${item.color}20` }}>
-                        <item.icon className="text-base" style={{ color: item.color }} />
+                <div className="space-y-4">
+                  {contactItems.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-xl border border-zinc-150 bg-zinc-50 dark:border-zinc-800/80 dark:bg-zinc-900/40 p-4 flex items-center gap-4"
+                    >
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" 
+                        style={{ backgroundColor: `${item.color}15` }}
+                      >
+                        <item.icon className="text-sm" style={{ color: item.color }} />
                       </div>
 
-                      <div className="min-w-0">
-                        <p className="text-xs uppercase tracking-wide font-semibold text-slate-500 mb-0.5">{item.label}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-wider">
+                          {item.label}
+                        </p>
                         {item.href ? (
-                          <a href={item.href} className="text-sm sm:text-base text-slate-700 hover:text-blue-700 transition-colors break-all">
+                          <a 
+                            href={item.href} 
+                            className="text-xs sm:text-sm font-semibold text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-500 transition-colors break-all"
+                          >
                             {item.value}
                           </a>
                         ) : (
-                          <p className="text-sm sm:text-base text-slate-700 break-words">{item.value}</p>
+                          <p className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 break-words">
+                            {item.value}
+                          </p>
                         )}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-4 mb-5">
-                <div className="flex items-center gap-2 text-sm sm:text-base text-slate-700">
-                  <FaCheckCircle className="text-emerald-600 shrink-0" />
-                  <span>Average response time: within 24 hours</span>
+                  ))}
                 </div>
               </div>
 
-              <div>
-                <p className="text-sm font-semibold text-slate-800 mb-3">Follow Me</p>
-                <div className="flex items-center gap-2.5">
-                  {socialLinks.map((item) => (
+              {/* Social Channels */}
+              <div className="pt-8 mt-8 border-t border-zinc-150 dark:border-zinc-800/60">
+                <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-3 uppercase tracking-wider">Follow Me</p>
+                <div className="flex items-center gap-2">
+                  {socialLinks.map((social) => (
                     <motion.a
-                      key={item.label}
-                      href={item.href}
+                      key={social.label}
+                      href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={item.label}
-                      whileHover={{ y: -3 }}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-slate-200 bg-white text-slate-700 hover:text-blue-700 hover:border-blue-200 transition-all flex items-center justify-center"
+                      className="w-10 h-10 rounded-xl border border-zinc-200 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-150 shadow-xs flex items-center justify-center cursor-pointer transition-all"
+                      whileHover={{ y: -2 }}
+                      aria-label={social.label}
                     >
-                      <item.icon className="text-base sm:text-lg" />
+                      <social.icon className="text-base" />
                     </motion.a>
                   ))}
                 </div>
               </div>
+
             </div>
           </motion.div>
 
+          {/* Form Card */}
           <motion.div
             className="lg:col-span-7 h-full"
-            initial={{ opacity: 0, x: 35 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/95 p-5 sm:p-6 lg:p-8 shadow-sm h-full flex flex-col">
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-blue-50/40 via-transparent to-indigo-50/40" />
-
-              <div className="relative flex-1 flex flex-col">
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">Send a Message</h3>
-                <p className="text-sm sm:text-base text-slate-600 mb-6">Tell me about your requirement, and I will get back with the right solution.</p>
-
-                <div className="mb-5 sm:mb-6 rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-4">
-                  <p className="text-xs sm:text-sm font-semibold text-slate-800 mb-2">Quick Project Brief</p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {["Budget range", "Timeline", "Target users", "Core features"].map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
-                        <FaCheckCircle className="text-emerald-600 text-xs shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <form className="flex-1 flex flex-col" onSubmit={handleSubmit}>
-                  <div className="space-y-4 sm:space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                      <div>
-                        <label htmlFor="name" className="block text-sm text-slate-700 font-medium mb-2">Name</label>
-                        <input
-                          id="name"
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                          minLength={2}
-                          className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                          placeholder="Your name"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="email" className="block text-sm text-slate-700 font-medium mb-2">Email</label>
-                        <input
-                          id="email"
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                          placeholder="your@email.com"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-sm text-slate-700 font-medium mb-2">Message</label>
-                      <textarea
-                        id="message"
-                        rows="6"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        minLength={10}
-                        className="w-full px-4 py-3 text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
-                        placeholder="Tell me about your project, target users, timeline, and goals..."
-                      />
-                    </div>
-
+            <div className="glow-card p-6 sm:p-8 flex flex-col justify-between h-full">
+              <div>
+                <h3 className="text-lg sm:text-xl font-extrabold text-zinc-900 dark:text-zinc-50 font-display mb-4">
+                  Send a Message
+                </h3>
+                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  
+                  {/* Name field */}
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-bold text-zinc-600 dark:text-zinc-400 mb-1.5 uppercase tracking-wide">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
+                      className={`w-full px-4 py-3 rounded-xl border bg-zinc-50 dark:bg-zinc-950 text-sm focus:outline-none transition-all ${
+                        errors.name 
+                          ? 'border-red-500/50 focus:ring-1 focus:ring-red-500/50' 
+                          : 'border-zinc-200 dark:border-zinc-800 focus:ring-1 focus:ring-blue-500/50'
+                      }`}
+                      placeholder="Your Name"
+                    />
+                    {errors.name && (
+                      <p className="flex items-center gap-1.5 text-xxs text-red-500 mt-1">
+                        <FaExclamationCircle className="text-[10px]" />
+                        <span>{errors.name}</span>
+                      </p>
+                    )}
                   </div>
 
+                  {/* Email field */}
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-bold text-zinc-600 dark:text-zinc-400 mb-1.5 uppercase tracking-wide">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
+                      className={`w-full px-4 py-3 rounded-xl border bg-zinc-50 dark:bg-zinc-950 text-sm focus:outline-none transition-all ${
+                        errors.email 
+                          ? 'border-red-500/50 focus:ring-1 focus:ring-red-500/50' 
+                          : 'border-zinc-200 dark:border-zinc-800 focus:ring-1 focus:ring-blue-500/50'
+                      }`}
+                      placeholder="you@example.com"
+                    />
+                    {errors.email && (
+                      <p className="flex items-center gap-1.5 text-xxs text-red-500 mt-1">
+                        <FaExclamationCircle className="text-[10px]" />
+                        <span>{errors.email}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Message field */}
+                  <div>
+                    <label htmlFor="message" className="block text-xs font-bold text-zinc-600 dark:text-zinc-400 mb-1.5 uppercase tracking-wide">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows="5"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
+                      className={`w-full px-4 py-3 rounded-xl border bg-zinc-50 dark:bg-zinc-950 text-sm focus:outline-none transition-all resize-none ${
+                        errors.message 
+                          ? 'border-red-500/50 focus:ring-1 focus:ring-red-500/50' 
+                          : 'border-zinc-200 dark:border-zinc-800 focus:ring-1 focus:ring-blue-500/50'
+                      }`}
+                      placeholder="Outline details, target audience, timeline, or inquiries..."
+                    />
+                    {errors.message && (
+                      <p className="flex items-center gap-1.5 text-xxs text-red-500 mt-1">
+                        <FaExclamationCircle className="text-[10px]" />
+                        <span>{errors.message}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Error Notification Banner */}
                   {submitError && (
-                    <p className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                      {submitError}
-                    </p>
+                    <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
+                      <FaExclamationCircle className="shrink-0" />
+                      <span>{submitError}</span>
+                    </div>
                   )}
 
+                  {/* Submit Button */}
                   <motion.button
                     type="submit"
-                    className={`w-full mt-5 sm:mt-6 inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed ${submitButtonColorClass}`}
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
+                    className={`w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all disabled:opacity-75 disabled:cursor-not-allowed ${
+                      submitSuccess 
+                        ? 'bg-emerald-600 dark:bg-emerald-500 hover:bg-emerald-700' 
+                        : 'bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200'
+                    }`}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       {isSubmitting ? (
                         <motion.span
                           key="sending"
-                          className="inline-flex items-center gap-2"
-                          initial={{ opacity: 0, y: 8 }}
+                          className="flex items-center gap-2"
+                          initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          transition={{ duration: 0.2 }}
+                          exit={{ opacity: 0, y: -5 }}
                         >
                           Sending...
-                          <FaPaperPlane className="text-sm" />
+                          <div className="w-3.5 h-3.5 rounded-full border-2 border-white/35 border-t-white animate-spin" />
                         </motion.span>
                       ) : submitSuccess ? (
                         <motion.span
                           key="success"
-                          className="inline-flex items-center gap-2"
-                          initial={{ opacity: 0, y: 8 }}
+                          className="flex items-center gap-2"
+                          initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          transition={{ duration: 0.2 }}
+                          exit={{ opacity: 0, y: -5 }}
                         >
-                          Message sent successfully.
-                          <FaCheckCircle className="text-sm" />
+                          Message Sent!
+                          <FaCheckCircle className="text-xs text-white" />
                         </motion.span>
                       ) : (
                         <motion.span
                           key="default"
-                          className="inline-flex items-center gap-2"
-                          initial={{ opacity: 0, y: 8 }}
+                          className="flex items-center gap-2"
+                          initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          transition={{ duration: 0.2 }}
+                          exit={{ opacity: 0, y: -5 }}
                         >
                           Send Message
-                          <FaPaperPlane className="text-sm" />
+                          <FaPaperPlane className="text-xs" />
                         </motion.span>
                       )}
                     </AnimatePresence>
                   </motion.button>
+
                 </form>
               </div>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

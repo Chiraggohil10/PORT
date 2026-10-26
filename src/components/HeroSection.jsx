@@ -1,197 +1,248 @@
-﻿import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FaCode, FaTerminal } from 'react-icons/fa';
-import Chirag from '../assets/chirag1.png';
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { FaCode, FaTerminal, FaBriefcase, FaEnvelope, FaChevronDown } from 'react-icons/fa';
+import ChiragWebP from '../assets/chirag1.webp';
 import { scrollToSection } from '../utils/scrollToSection';
+
+// Custom animated counter hook/component for interactive stats
+const Counter = ({ target, duration = 1.5 }) => {
+  const [count, setCount] = useState(0);
+  const numericTarget = parseInt(target.replace(/\D/g, ''), 10);
+  const suffix = target.replace(/\d/g, '');
+
+  useEffect(() => {
+    let start = 0;
+    const end = numericTarget;
+    if (start === end) return;
+
+    let totalMiliseconds = duration * 1000;
+    let incrementTime = Math.max(Math.floor(totalMiliseconds / end), 30);
+    
+    let timer = setInterval(() => {
+      start += 1;
+      setCount(start);
+      if (start === end) {
+        clearInterval(timer);
+      }
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [numericTarget, duration]);
+
+  return <span>{count}{suffix}</span>;
+};
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMouseDevice, setIsMouseDevice] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
+    // Only track mouse movement if the user has a fine-pointing device (e.g. mouse) and hasn't requested reduced motion
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    setIsMouseDevice(mediaQuery.matches);
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    if (mediaQuery.matches && !prefersReducedMotion) {
+      const handleMouseMove = (e) => {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth - 0.5) * 15,
+          y: (e.clientY / window.innerHeight - 0.5) * 15,
+        });
+      };
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => window.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, [prefersReducedMotion]);
 
   return (
-    <section id="home" className="relative min-h-screen px-4 sm:px-6 lg:px-8 flex items-center justify-center overflow-hidden pt-20">
-      <div className="section-solid-bg" />
-      <div className="section-grid-pattern" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16 md:py-24">
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-1/4 left-10 w-72 h-72 md:w-96 md:h-96 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow pointer-events-none" />
+      <div className="absolute bottom-1/4 right-10 w-72 h-72 md:w-96 md:h-96 bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow pointer-events-none" />
 
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity, delay: 2 }}
-      />
-
-      <div className="section-wrap px-0 py-14 sm:py-16 lg:py-20">
-        <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-10 lg:gap-12 xl:gap-16">
-          <motion.div
-            className="w-full lg:w-1/2 lg:pr-4 xl:pr-6 text-center lg:text-left"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+      <div className="section-wrap flex flex-col lg:flex-row items-center lg:justify-between gap-12 xl:gap-16">
+        {/* Left Content Column */}
+        <motion.div
+          className="w-full lg:w-1/2 text-center lg:text-left z-10"
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Availability badge */}
+          <motion.div 
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mb-6 shadow-sm"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
           >
-            <motion.h1
-              className="text-fluid-display font-bold text-slate-900 mb-5"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              Hi, I&apos;m{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Chirag Gohil
-              </span>
-            </motion.h1>
-
-            <motion.h2
-              className="text-fluid-h1 font-bold text-slate-700 mb-5"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              Full Stack Developer
-            </motion.h2>
-
-            <motion.p
-              className="text-fluid-body text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 break-words"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              I build exceptional digital experiences with modern technologies.
-              Specializing in scalable web applications using React, Node.js, and cloud technologies.
-            </motion.p>
-
-            <motion.div
-              className="flex flex-wrap sm:flex-nowrap gap-3 sm:gap-4 justify-center lg:justify-start"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <motion.button
-                onClick={() => scrollToSection('projects')}
-                className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm sm:text-base text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View Projects
-              </motion.button>
-
-              <motion.button
-                onClick={() => scrollToSection('contact')}
-                className="flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 bg-white text-sm sm:text-base text-blue-600 font-semibold rounded-xl border-2 border-blue-200 shadow-md hover:shadow-lg hover:border-blue-300 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Me
-              </motion.button>
-            </motion.div>
-
-            <motion.div
-              className="grid grid-cols-3 gap-4 sm:gap-6 mt-10 sm:mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              {[
-                { number: '3+', label: 'Years Experience' },
-                { number: '20+', label: 'Projects Completed' },
-                { number: '15+', label: 'Happy Clients' },
-              ].map((stat, index) => (
-                <motion.div key={index} className="text-center lg:text-left" whileHover={{ scale: 1.1 }}>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">{stat.number}</div>
-                  <div className="text-xs sm:text-sm text-slate-600 mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            <span>Available for new opportunities</span>
           </motion.div>
 
-          <motion.div
-            className="w-full lg:w-1/2 lg:pl-4 xl:pl-6 flex justify-center lg:justify-end"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+          <motion.h1
+            className="text-fluid-display font-extrabold text-zinc-900 dark:text-zinc-50 mb-4 leading-none"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
           >
-            <div className="relative w-full max-w-[24rem] sm:max-w-[29rem] lg:max-w-[29rem]">
-              <motion.div
-                className="absolute -inset-5 rounded-[2.25rem] bg-gradient-to-br from-blue-500/20 via-indigo-500/15 to-cyan-500/20 blur-2xl"
-                animate={{ opacity: [0.45, 0.65, 0.45], scale: [1, 1.03, 1] }}
-                transition={{ duration: 6, repeat: Infinity }}
-              />
+            Hi, I&apos;m{' '}
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400">
+              Chirag Gohil
+            </span>
+          </motion.h1>
 
-              <motion.div
-                className="absolute -inset-2 rounded-[2.25rem] border border-blue-200/50"
-                animate={{ rotate: [0, 1.5, 0, -1.5, 0] }}
-                transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-              />
+          <motion.h2
+            className="text-fluid-h3 font-semibold text-zinc-600 dark:text-zinc-400 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            Frontend Architect & React Specialist
+          </motion.h2>
 
-              <div
-                className="relative rounded-[2rem] border border-white/70 bg-white/90 p-4 sm:p-5 lg:p-4 shadow-[0_25px_65px_-25px_rgba(37,99,235,0.55)] backdrop-blur-xl"
-                style={{
-                  transform: `translate3d(${mousePosition.x * 0.35}px, ${mousePosition.y * 0.35}px, 0)`,
-                }}
-              >
-                <div className="relative overflow-hidden rounded-[1.5rem]">
-                  <motion.img
-                    src={Chirag}
-                    alt="Chirag Gohil"
-                    className="h-[23rem] sm:h-[28rem] lg:h-[28rem] w-full object-cover object-top"
-                    decoding="async"
-                    fetchPriority="high"
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ duration: 0.45 }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/65 via-slate-900/10 to-transparent" />
-                  <div className="absolute left-4 right-4 bottom-4 rounded-2xl border border-white/25 bg-white/90 px-4 py-3.5 backdrop-blur">
-                    <p className="text-base sm:text-lg font-bold text-slate-900">Chirag Gohil</p>
-                    <p className="text-xs sm:text-sm text-slate-600">Full Stack Developer | React | Node.js | MongoDB</p>
-                  </div>
+          <motion.p
+            className="text-fluid-body text-zinc-500 dark:text-zinc-400 mb-8 max-w-xl mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            I build high-performance, pixel-perfect user interfaces and modern full-stack systems. 
+            Specializing in clean architectures, accessible user journeys, and robust web standards.
+          </motion.p>
+
+          {/* Call to actions */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-md mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="flex-1 px-8 py-3.5 bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 text-sm font-semibold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all shadow-md shadow-zinc-500/10 cursor-pointer flex items-center justify-center gap-2"
+            >
+              <FaBriefcase className="text-xs" />
+              <span>Explore Projects</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="flex-1 px-8 py-3.5 bg-white border border-zinc-200 text-zinc-900 dark:bg-zinc-900/60 dark:border-zinc-800 dark:text-zinc-50 text-sm font-semibold rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
+            >
+              <FaEnvelope className="text-xs" />
+              <span>Get In Touch</span>
+            </button>
+          </motion.div>
+
+          {/* Stats Bar */}
+          <motion.div
+            className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-zinc-200/60 dark:border-zinc-800/60 max-w-lg mx-auto lg:mx-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            {[
+              { target: '3+', label: 'Years Experience' },
+              { target: '20+', label: 'Projects Completed' },
+              { target: '99%', label: 'Delivery Focus' },
+            ].map((stat, index) => (
+              <div key={index} className="text-center lg:text-left">
+                <div className="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-500 font-display">
+                  <Counter target={stat.target} />
                 </div>
+                <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-                <div className="mt-3.5 grid grid-cols-2 gap-2.5 sm:gap-3.5">
-                  <div className="rounded-xl border border-blue-100 bg-blue-50/70 px-3 py-2.5 sm:py-3 text-center">
-                    <p className="text-sm sm:text-base font-bold text-blue-700">20+</p>
-                    <p className="text-[11px] sm:text-xs text-slate-600">Projects</p>
-                  </div>
-                  <div className="rounded-xl border border-indigo-100 bg-indigo-50/70 px-3 py-2.5 sm:py-3 text-center">
-                    <p className="text-sm sm:text-base font-bold text-indigo-700">99%</p>
-                    <p className="text-[11px] sm:text-xs text-slate-600">Delivery Focus</p>
-                  </div>
+        {/* Right Visual Column (Avatar Card) */}
+        <motion.div
+          className="w-full lg:w-1/2 flex justify-center lg:justify-end"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          <div className="relative w-full max-w-[340px] sm:max-w-[400px]">
+            {/* Glowing Backdrop Canvas */}
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/20 via-indigo-500/10 to-violet-500/20 dark:from-blue-500/10 dark:via-indigo-500/5 dark:to-violet-500/10 blur-2xl pointer-events-none" />
+
+            {/* Glowing borders */}
+            <div className="absolute -inset-1.5 rounded-[2.25rem] border border-blue-500/15 dark:border-blue-500/10 animate-pulse-slow pointer-events-none" />
+
+            {/* Main Interactive card */}
+            <div
+              className="glow-card relative p-3 backdrop-blur-xl shadow-2xl transition-transform duration-200"
+              style={{
+                transform: isMouseDevice && !prefersReducedMotion
+                  ? `translate3d(${mousePosition.x}px, ${mousePosition.y}px, 0) rotateX(${-mousePosition.y * 0.15}deg) rotateY(${mousePosition.x * 0.15}deg)`
+                  : 'none',
+              }}
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-950 aspect-[1/1.18]">
+                <img
+                  src={ChiragWebP}
+                  alt="Chirag Gohil"
+                  className="w-full h-full object-cover object-top filter grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-500"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+                
+                {/* Visual Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/20 to-transparent pointer-events-none" />
+
+                {/* Profile Brief Badge */}
+                <div className="absolute left-4 right-4 bottom-4 rounded-xl border border-white/10 bg-zinc-900/90 backdrop-blur-md px-4 py-3.5 text-left">
+                  <p className="text-sm font-bold text-white font-display">Chirag Gohil</p>
+                  <p className="text-[11px] text-zinc-400 font-semibold tracking-wide mt-0.5">REACT ARCHITECT | FULL STACK ENGINEER</p>
                 </div>
               </div>
 
-              <motion.div
-                className="hidden sm:flex absolute -top-4 -right-4 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-lg items-center gap-2"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3.2, repeat: Infinity }}
-              >
-                <FaCode className="text-blue-600 text-sm" />
-                <span className="text-xs font-semibold text-slate-700">Clean Code</span>
-              </motion.div>
-
-              <motion.div
-                className="hidden sm:flex absolute -bottom-4 -left-4 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-lg items-center gap-2"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 3.2, repeat: Infinity, delay: 1.1 }}
-              >
-                <FaTerminal className="text-indigo-600 text-sm" />
-                <span className="text-xs font-semibold text-slate-700">Full Stack</span>
-              </motion.div>
+              {/* Stat badges */}
+              <div className="mt-3 grid grid-cols-2 gap-2 text-center">
+                <div className="rounded-xl border border-zinc-150 bg-zinc-50 dark:border-zinc-800/80 dark:bg-zinc-900/60 px-3 py-2">
+                  <p className="text-sm font-bold text-blue-600 dark:text-blue-500 font-display">20+</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-semibold mt-0.5">Projects Delivered</p>
+                </div>
+                <div className="rounded-xl border border-zinc-150 bg-zinc-50 dark:border-zinc-800/80 dark:bg-zinc-900/60 px-3 py-2">
+                  <p className="text-sm font-bold text-indigo-600 dark:text-indigo-500 font-display">100%</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-semibold mt-0.5">Client Satisfaction</p>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        </div>
+
+            {/* Floating Technical Decor Badges */}
+            <motion.div
+              className="absolute -top-3 -right-3 rounded-xl border border-zinc-200 bg-white/95 dark:border-zinc-800 dark:bg-zinc-900 px-3.5 py-2 shadow-lg flex items-center gap-2 pointer-events-none"
+              animate={prefersReducedMotion ? {} : { y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <FaCode className="text-blue-500 text-xs" />
+              <span className="text-[10px] font-bold text-zinc-700 dark:text-zinc-300 tracking-wider">CLEAN CODE</span>
+            </motion.div>
+
+            <motion.div
+              className="absolute -bottom-3 -left-3 rounded-xl border border-zinc-200 bg-white/95 dark:border-zinc-800 dark:bg-zinc-900 px-3.5 py-2 shadow-lg flex items-center gap-2 pointer-events-none"
+              animate={prefersReducedMotion ? {} : { y: [0, 6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            >
+              <FaTerminal className="text-indigo-500 text-xs" />
+              <span className="text-[10px] font-bold text-zinc-700 dark:text-zinc-300 tracking-wider">REACT SYSTEM</span>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Floating Scroll Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
+           onClick={() => scrollToSection('about')}>
+        <span className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase">Scroll Down</span>
+        <motion.div
+          animate={prefersReducedMotion ? {} : { y: [0, 4, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <FaChevronDown className="text-xs text-zinc-500" />
+        </motion.div>
       </div>
     </section>
   );

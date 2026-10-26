@@ -1,32 +1,48 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaBriefcase, FaCode, FaGraduationCap, FaBuilding } from 'react-icons/fa';
+import { FaBriefcase, FaCode, FaGraduationCap, FaBuilding, FaCheck } from 'react-icons/fa';
 import { scrollToSection } from '../utils/scrollToSection';
 
 const ExperienceSection = () => {
+
   const experiences = [
     {
       icon: FaBuilding,
       title: 'Full Stack Developer',
       company: 'Theta Solutions | Bill Saathi',
       period: 'Jan 2026 - Present',
-      description: 'Developing scalable full-stack web applications using React.js, Node.js, and Express.js. Designing clean, modular architectures with reusable components. Building secure REST APIs and integrating them with modern frontend interfaces.',
+      description: 'Engineering billing ERP platforms with modular frontend widgets and secure backend routing.',
+      bullets: [
+        'Developing transactional full-stack React dashboards resolving heavy dataset displays.',
+        'Architecting REST APIs with robust Express schemas and MongoDB validations.',
+        'Consolidating reusable state hook systems to reduce redundancy across modules.'
+      ],
       color: '#3B82F6',
     },
     {
       icon: FaCode,
       title: 'Frontend / Full Stack Developer',
       company: 'Dashlani Technology Pvt. Ltd.',
-      period: 'September 2025 - January 2026',
-      description: 'Developed high-quality, performance-optimized React.js frontends with clean architecture. Built pixel-perfect UI using Tailwind CSS and Framer Motion. Engineered backend services using Node.js and Express.js with Swagger API documentation.',
+      period: 'Sept 2025 - Jan 2026',
+      description: 'Shipped highly responsive user interfaces utilizing modular layout systems and rich API documentation.',
+      bullets: [
+        'Developed fluid layouts utilizing Tailwind CSS and Framer Motion, maintaining 60 FPS performance.',
+        'Engineered Express.js microservices with detailed Swagger API documentation schema systems.',
+        'Optimized core bundles reducing load latency by implementing dynamic code-splitting.'
+      ],
       color: '#8B5CF6',
     },
     {
       icon: FaBriefcase,
       title: 'Frontend Developer / React Developer',
       company: 'United Tech and Solutions',
-      period: 'March 2025 - September 2025',
-      description: 'Built responsive web and mobile interfaces using React.js, React Native, Tailwind CSS. Integrated Firebase for real-time database and authentication. Developed reusable React and React Native components with clean code.',
+      period: 'March 2025 - Sept 2025',
+      description: 'Constructed responsive interfaces and integrations for web and hybrid mobile platforms.',
+      bullets: [
+        'Built responsive web interfaces and mobile screens utilizing React and React Native.',
+        'Integrated Firebase for OAuth secure authorizations and real-time database syncing.',
+        'Collaborated with designers to build pixel-perfect UI libraries matching brand design rules.'
+      ],
       color: '#EC4899',
     },
     {
@@ -34,16 +50,15 @@ const ExperienceSection = () => {
       title: 'Bachelor of Computer Applications (BCA)',
       company: 'Veer Narmad South Gujarat University',
       period: '2021 - 2024',
-      description: '',
+      description: 'Foundations in computer science theory, databases, algorithms, and modular object-oriented coding.',
       education: true,
       training: {
         title: 'MERN Stack Development Training',
         institute: 'Jspider Institute, Bangalore',
         details: [
-          'MongoDB, Express.js, React.js, Node.js',
-          'REST API development',
-          'Full Stack Web Application Architecture',
-          'JavaScript and modern frontend development practices'
+          'MongoDB aggregation engines & Express backend design patterns.',
+          'React component lifecycles, states, and client hooks configurations.',
+          'REST API design schemas, security parameters, and Node runtime executions.'
         ]
       },
       color: '#10B981',
@@ -51,127 +66,148 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="section-solid-bg" />
-      <div className="section-grid-pattern" />
-
+    <section id="experience" className="relative py-20 px-4 sm:px-6 lg:px-8 border-t border-zinc-200/80 dark:border-zinc-800/80">
       <div className="section-wrap">
+        
+        {/* Section Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
-          <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
-            MY JOURNEY
+          <span className="inline-block px-3.5 py-1.5 rounded-full border border-purple-500/10 bg-purple-500/5 text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider mb-4">
+            My Journey
           </span>
-          <h2 className="text-fluid-h2 font-bold text-slate-900 mb-4">
+          <h2 className="text-fluid-h2 font-extrabold text-zinc-900 dark:text-zinc-50 mb-4 font-display">
             Experience &{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Growth
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+              professional growth
             </span>
           </h2>
+          <p className="text-fluid-body text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            A history of shipping clean client applications, building secure server microservices, and coding responsive systems.
+          </p>
         </motion.div>
 
-        <div className="w-full">
-          {/* Timeline */}
-          <div className="relative">
-            {/* Center line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 transform md:-translate-x-1/2" />
+        {/* Timeline graphics */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Vertical central bar (Left-aligned on mobile, centered on desktop) */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800 -translate-x-1/2 pointer-events-none" />
 
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                className={`relative flex items-start gap-8 mb-12 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-              >
-                {/* Content */}
-                <div className={`flex-1 ml-12 md:ml-0`}>
-                  <motion.div
-                    className="bg-white p-5 sm:p-6 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3">
-                      {exp.period}
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-1 break-words">{exp.title}</h3>
-                    <p className="text-sm sm:text-base text-blue-600 font-semibold mb-3 break-words">{exp.company}</p>
-                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed break-words">{exp.description}</p>
-                    
-                    {/* Special Training Section for Education */}
-                    {exp.education && exp.training && (
-                      <motion.div 
-                        className="mt-4 bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                            <FaCode className="text-white text-sm" />
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-green-800">{exp.training.title}</h4>
-                            <p className="text-sm text-green-600 font-semibold">{exp.training.institute}</p>
-                          </div>
-                        </div>
-                        <ul className="space-y-2">
-                          {exp.training.details.map((item, idx) => (
-                            <motion.li
-                              key={idx}
-                              className="flex items-start gap-2 text-sm text-slate-700"
-                              initial={{ opacity: 0, x: -10 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: 0.1 * idx }}
-                            >
-                              <span className="mt-1.5 w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
-                              <span>{item}</span>
-                            </motion.li>
+          <div className="space-y-12">
+            {experiences.map((exp, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`relative flex flex-col md:flex-row ${
+                    isEven ? '' : 'md:flex-row-reverse'
+                  } items-start gap-8 md:gap-0`}
+                >
+                  {/* Card wrapper (left or right column) */}
+                  <div className="w-full md:w-[46%] ml-10 md:ml-0">
+                    <div className="glow-card p-5 sm:p-6 shadow-md hover:border-zinc-300 dark:hover:border-zinc-700">
+                      
+                      {/* Date Badge */}
+                      <span className="inline-block px-2.5 py-1 text-xxs font-bold text-blue-600 dark:text-blue-500 bg-blue-500/5 rounded-md mb-3">
+                        {exp.period}
+                      </span>
+                      
+                      {/* Job Title & Company */}
+                      <h3 className="text-lg font-extrabold text-zinc-900 dark:text-zinc-50 font-display leading-snug">
+                        {exp.title}
+                      </h3>
+                      <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400 mt-1 mb-3">
+                        {exp.company}
+                      </p>
+
+                      {/* Brief description */}
+                      <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
+                        {exp.description}
+                      </p>
+
+                      {/* Key bullet achievements */}
+                      {exp.bullets && (
+                        <ul className="space-y-2 mb-2">
+                          {exp.bullets.map((bullet, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5 text-xs text-zinc-500 dark:text-zinc-400">
+                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                              <span>{bullet}</span>
+                            </li>
                           ))}
                         </ul>
-                      </motion.div>
-                    )}
-                  </motion.div>
-                </div>
+                      )}
+                      
+                      {/* Education specialized JSpider Course Box */}
+                      {exp.education && exp.training && (
+                        <div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow-sm">
+                              <FaCode className="text-xs" />
+                            </div>
+                            <div>
+                              <h4 className="text-xs font-bold text-emerald-800 dark:text-emerald-400 font-display">
+                                {exp.training.title}
+                              </h4>
+                              <p className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500/80">
+                                {exp.training.institute}
+                              </p>
+                            </div>
+                          </div>
+                          <ul className="space-y-2">
+                            {exp.training.details.map((detail, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-xxs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                <FaCheck className="text-[9px] text-emerald-500 mt-0.5 shrink-0" />
+                                <span>{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                {/* Icon/Dot */}
-                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 rounded-full border-4 border-white shadow-lg flex items-center justify-center"
-                     style={{ backgroundColor: exp.color }}>
-                  <exp.icon className="text-white text-sm" />
-                </div>
+                  {/* Bullet indicator in the middle path */}
+                  <div 
+                    className="absolute left-4 md:left-1/2 w-8 h-8 rounded-full border-4 border-white dark:border-zinc-950 flex items-center justify-center -translate-x-1/2 shadow-md z-10"
+                    style={{ backgroundColor: exp.color }}
+                  >
+                    <exp.icon className="text-white text-xs" />
+                  </div>
 
-                {/* Empty space for alternating layout */}
-                <div className="hidden md:block flex-1" />
-              </motion.div>
-            ))}
+                  {/* Place holder column for alternating align */}
+                  <div className="hidden md:block w-[46%]" />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        {/* CTA */}
+        {/* Action Button Row */}
         <motion.div
-          className="text-center mt-12"
+          className="text-center mt-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.2 }}
         >
-          <p className="text-sm sm:text-base text-slate-600 mb-4">Always eager to take on new challenges</p>
-          <motion.button
+          <p className="text-xs sm:text-sm font-semibold text-zinc-500 dark:text-zinc-400 mb-4">
+            Eager to contribute to collaborative product teams.
+          </p>
+          <button
             onClick={() => scrollToSection('contact')}
-            className="inline-block w-full sm:w-auto px-8 py-3 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer"
-            whileHover={{ scale: 1.05 }}
+            className="px-6 py-3 bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 text-sm font-semibold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all cursor-pointer shadow-sm"
           >
-            Let&apos;s Work Together
-          </motion.button>
+            Let&apos;s Build Together
+          </button>
         </motion.div>
+
       </div>
     </section>
   );
